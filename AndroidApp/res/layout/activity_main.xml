@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.androidapp.MainActivity" >
+
+    <ImageView 
+        android:id="@+id/preview" 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/salad"/>
+    
+    <Button
+        android:id="@+id/set"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="#cccccc"
+        android:text="Set Wallpaper" />
+
+</RelativeLayout>
