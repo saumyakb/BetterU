@@ -16,5 +16,4 @@
         android:layout_height="40dp"
         android:background="#cccccc"
         android:text="Set Wallpaper" />
-
 </RelativeLayout>

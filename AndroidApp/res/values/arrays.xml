@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_eatHabitTypes_entries">
+        <item>3 Square Meals</item>
+		<item>Snacker</item>        
+    </string-array>
+    
+    <string-array name="pref_eatHabitTypes_values">
+        <item>3</item>
+        <item>6</item>        
+    </string-array>
+
+    <string-array name="pref_cat_food_typeEntries">
+		<item>Dairy</item>
+		<item>Fish &amp; Seafood</item>
+		<item>Fruits</item>
+		<item>Legumes &amp; Soy</item>
+		<item>Grains</item>
+		<item>Nuts &amp; Seeds</item>
+		<item>Meats, Red (e.g., beef, pork, game)</item>
+		<item>Meats, White (e.g., chicken)</item>   
+		<item>Vegetables</item>
+		</string-array>
+    
+    <string-array name="pref_cat_food_typeValues">
+		<item>dairy</item>
+		<item>fish</item>
+		<item>fruit</item> 
+		<item>legume</item>
+		<item>grain</item>
+		<item>nut</item>
+		<item>meat_red</item>
+		<item>meat_white</item>   
+		<item>vegetable</item>
+	</string-array>
+    
+    <string-array name="pref_meal_timeEntries">
+		<item>12 AM - 2 AM</item>
+		<item>3 AM - 5 AM</item>
+		<item>6 AM - 8 AM</item>
+		<item>9 AM - 11 AM</item>
+		<item>12 PM - 2 PM</item>
+		<item>3 PM - 5 PM</item>
+		<item>6 PM - 8 PM</item>
+		<item>9 PM - 11 AM</item>
+	</string-array>
+    
+    <string-array name="pref_meal_timeValues">
+		<item>0</item>
+		<item>3</item>
+		<item>6</item>
+		<item>9</item>
+		<item>12</item>
+		<item>15</item>
+		<item>18</item>
+		<item>21</item>
+    </string-array>
+    
+    <string-array name="pref_snack_timeEntries">
+		<item>12 AM - 2 AM</item>
+		<item>3 AM - 5 AM</item>
+		<item>6 AM - 8 AM</item>
+		<item>9 AM - 11 AM</item>
+		<item>12 PM - 2 PM</item>
+		<item>3 PM - 5 PM</item>
+		<item>6 PM - 8 PM</item>
+		<item>9 PM - 11 AM</item>
+	</string-array>
+    
+    <string-array name="pref_snack_timeValues">
+		<item>0</item>
+		<item>3</item>
+		<item>6</item>
+		<item>9</item>
+		<item>12</item>
+		<item>15</item>
+		<item>18</item>
+		<item>21</item>
+    </string-array>
+    
+    <string-array name="empty_array">
+        
+    </string-array>
+    
+    
+</resources>

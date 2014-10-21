@@ -2,11 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.androidapp.MainActivity" >
-
     <item
+        android:id="@+id/action_survey"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_new_event"
+        android:title="@string/action_survey"
+        />
+	<item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
+        android:showAsAction="never"/>
 </menu>
