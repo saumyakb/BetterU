@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View.OnClickListener;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +27,12 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         
         Button buttonSetWallpaper = (Button) findViewById(R.id.set);
+        Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
         ImageView imagePreview = (ImageView) findViewById(R.id.preview);
+        
+        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+		final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+		final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
         
         buttonSetWallpaper.setOnClickListener(new OnClickListener(){
         
@@ -39,6 +46,18 @@ public class MainActivity extends ActionBarActivity {
         	 }
         	
         });
+        
+        buttonResetWallpaper.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+       		 
+       		 try {
+       			 wallpaperManager.setBitmap(bitmap);
+       			 Toast.makeText(getApplicationContext(), "Original Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
+       		 }catch(Exception e){
+       		 }
+       	 }
+       	
+       });
     }
 
 
