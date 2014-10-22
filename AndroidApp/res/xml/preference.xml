@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="@string/pref_cat_general_title">
+        <EditTextPreference
+            android:key="pref_participant_key"
+            android:title="@string/pref_participant_title"
+            android:summary="@string/pref_participant_summ"
+            android:dialogTitle="@string/pref_participant_title" />        
+		<CheckBoxPreference
+	        android:defaultValue="true"
+	        android:key="pref_reminder_key"
+	        android:title="@string/pref_survey_reminder"
+	        android:summary="@string/pref_survey_reminder_summ"
+	         />
+	</PreferenceCategory>
+	<PreferenceCategory
+	    android:title="@string/pref_cat_diet_title">
+		<MultiSelectListPreference
+	        android:dialogTitle="@string/pref_cat_food_title"
+	        android:key="pref_cat_food_list_key"
+	        android:summary="@string/pref_cat_food_summ"
+	        android:title="@string/pref_cat_food_title"
+	        android:entries="@array/pref_cat_food_typeEntries"
+	        android:entryValues="@array/pref_cat_food_typeValues"
+	        android:defaultValue="@array/empty_array"
+	        />	    
+		<MultiSelectListPreference
+	        android:dialogTitle="@string/pref_cat_meal_title"
+	        android:key="pref_cat_meal_list_key"
+	        android:summary="@string/pref_cat_meal_summ"
+	        android:title="@string/pref_cat_meal_title"
+	        android:entries="@array/pref_meal_timeEntries"
+	        android:entryValues="@array/pref_meal_timeValues"
+	        android:defaultValue="@array/empty_array"
+	        />	    
+		<MultiSelectListPreference
+	        android:dialogTitle="@string/pref_cat_snack_title"
+	        android:key="pref_cat_snack_list_key"
+	        android:summary="@string/pref_cat_snack_summ"
+	        android:title="@string/pref_cat_snack_title"
+	        android:entries="@array/pref_snack_timeEntries"
+	        android:entryValues="@array/pref_snack_timeValues"
+	        android:defaultValue="@array/empty_array"
+	        />	    
+	</PreferenceCategory>
+</PreferenceScreen>
