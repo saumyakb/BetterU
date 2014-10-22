@@ -5,24 +5,29 @@
     <string name="action_settings">Settings</string>
     <string name="action_survey">Survey</string>
 
-    <string name="pref_cat_general_title">General</string>
-
+    <string name="pref_cat_general_title">General Settings</string>
+    <string name="pref_survey_reminder">Reminders</string>
+    <string name="pref_participant_title">Your Participant ID</string>
+    <string name="pref_participant_summ">Set/View Participant ID</string>  
+    <string name="pref_survey_reminder_summ">Receive automatic notifications</string>      
+    
+    <string name="pref_cat_other_title">Other Settings</string>    
+    
     <string name="pref_cat_diet_title">Dietary Settings</string>
+    <string name="pref_cat_diet_summ">Food Schedules and Preferences</string>
     <string name="pref_cat_food_title">Food Pyramid</string>
     <string name="pref_cat_food_summ">Serving Preferences</string>
     <string name="pref_cat_meal_title">Meal Times</string>
     <string name="pref_cat_meal_summ">Breakfast, Lunch, Dinner</string>
     <string name="pref_cat_snack_title">Snack Times</string>    
-    <string name="pref_cat_snack_summ">Munching and Light Meals</string>    
-    
-    <string name="pref_eatHabitType">Eating Habits</string>
-    <string name="pref_eatHabitTypes_default">Snacker</string>  
-    
-    <string name="pref_survey_reminder">Reminders</string>
-    <string name="pref_survey_reminder_summ">Receive automatic notifications.</string>  
-    
-    <string name="pref_participant_title">Your Participant ID</string>
-    <string name="pref_participant_summ">Set/View Participant ID</string>  
+    <string name="pref_cat_snack_summ">Munching and Light Meals</string>
+   
+    <string name="pref_cat_bodyclock_title">Body Clock Rythms</string>
+    <string name="pref_cat_bodyclock_summ">Wake and Sleep Patterns</string>
+    <string name="pref_cat_bodyclock_wake_title">Rise &amp; Shine</string>
+    <string name="pref_cat_bodyclock_wake_summ">Wake-up time (normal)</string>
+    <string name="pref_cat_bodyclock_sleep_title">Sleep Cycle</string>
+    <string name="pref_cat_bodyclock_sleep_summ">Bed time (normal)</string>
     
     <string name="uri_survey">http://www.qualtrics.com/university/</string>    
 </resources>
