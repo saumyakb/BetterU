@@ -22,7 +22,7 @@
     <string name="pref_cat_snack_title">Snack Times</string>    
     <string name="pref_cat_snack_summ">Munching and Light Meals</string>
    
-    <string name="pref_cat_bodyclock_title">Body Clock Rythms</string>
+    <string name="pref_cat_bodyclock_title">Body Clock Rhythms</string>
     <string name="pref_cat_bodyclock_summ">Wake and Sleep Patterns</string>
     <string name="pref_cat_bodyclock_wake_title">Rise &amp; Shine</string>
     <string name="pref_cat_bodyclock_wake_summ">Wake-up time (normal)</string>
