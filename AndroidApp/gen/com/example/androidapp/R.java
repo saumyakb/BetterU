@@ -1109,8 +1109,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060024;
-        public static final int action_settings=0x7f06003f;
-        public static final int action_survey=0x7f06003e;
+        public static final int action_settings=0x7f060040;
+        public static final int action_survey=0x7f06003f;
         public static final int activity_chooser_view_content=0x7f060025;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
@@ -1139,6 +1139,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f06002f;
+        public static final int reset=0x7f06003e;
         public static final int search_badge=0x7f060032;
         public static final int search_bar=0x7f060031;
         public static final int search_button=0x7f060033;
@@ -1260,30 +1261,33 @@ containing a value of this type.
         /**  Description of a share target (both in the list of such or the default share button) in a ShareActionProvider (share UI). [CHAR LIMIT=NONE] 
          */
         public static final int abc_shareactionprovider_share_with_application=0x7f0b000b;
-        public static final int action_settings=0x7f0b000e;
-        public static final int action_survey=0x7f0b000f;
+        public static final int act_main_button_reset=0x7f0b000f;
+        public static final int act_main_button_set=0x7f0b000e;
+        public static final int act_main_image_desc=0x7f0b0010;
+        public static final int action_settings=0x7f0b0011;
+        public static final int action_survey=0x7f0b0012;
         public static final int app_name=0x7f0b000d;
-        public static final int pref_cat_bodyclock_sleep_summ=0x7f0b0023;
-        public static final int pref_cat_bodyclock_sleep_title=0x7f0b0022;
-        public static final int pref_cat_bodyclock_summ=0x7f0b001f;
-        public static final int pref_cat_bodyclock_title=0x7f0b001e;
-        public static final int pref_cat_bodyclock_wake_summ=0x7f0b0021;
-        public static final int pref_cat_bodyclock_wake_title=0x7f0b0020;
-        public static final int pref_cat_diet_summ=0x7f0b0017;
-        public static final int pref_cat_diet_title=0x7f0b0016;
-        public static final int pref_cat_food_summ=0x7f0b0019;
-        public static final int pref_cat_food_title=0x7f0b0018;
-        public static final int pref_cat_general_title=0x7f0b0010;
-        public static final int pref_cat_meal_summ=0x7f0b001b;
-        public static final int pref_cat_meal_title=0x7f0b001a;
-        public static final int pref_cat_other_title=0x7f0b0015;
-        public static final int pref_cat_snack_summ=0x7f0b001d;
-        public static final int pref_cat_snack_title=0x7f0b001c;
-        public static final int pref_participant_summ=0x7f0b0013;
-        public static final int pref_participant_title=0x7f0b0012;
-        public static final int pref_survey_reminder=0x7f0b0011;
-        public static final int pref_survey_reminder_summ=0x7f0b0014;
-        public static final int uri_survey=0x7f0b0024;
+        public static final int pref_cat_bodyclock_sleep_summ=0x7f0b0026;
+        public static final int pref_cat_bodyclock_sleep_title=0x7f0b0025;
+        public static final int pref_cat_bodyclock_summ=0x7f0b0022;
+        public static final int pref_cat_bodyclock_title=0x7f0b0021;
+        public static final int pref_cat_bodyclock_wake_summ=0x7f0b0024;
+        public static final int pref_cat_bodyclock_wake_title=0x7f0b0023;
+        public static final int pref_cat_diet_summ=0x7f0b001a;
+        public static final int pref_cat_diet_title=0x7f0b0019;
+        public static final int pref_cat_food_summ=0x7f0b001c;
+        public static final int pref_cat_food_title=0x7f0b001b;
+        public static final int pref_cat_general_title=0x7f0b0013;
+        public static final int pref_cat_meal_summ=0x7f0b001e;
+        public static final int pref_cat_meal_title=0x7f0b001d;
+        public static final int pref_cat_other_title=0x7f0b0018;
+        public static final int pref_cat_snack_summ=0x7f0b0020;
+        public static final int pref_cat_snack_title=0x7f0b001f;
+        public static final int pref_participant_summ=0x7f0b0016;
+        public static final int pref_participant_title=0x7f0b0015;
+        public static final int pref_survey_reminder=0x7f0b0014;
+        public static final int pref_survey_reminder_summ=0x7f0b0017;
+        public static final int uri_survey=0x7f0b0027;
     }
     public static final class style {
         /** 

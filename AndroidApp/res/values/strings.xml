@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">betterU</string>	
+
+    <string name="act_main_button_set">Set Wallpaper</string>
+    <string name="act_main_button_reset">Reset Wallpaper</string>
+    <string name="act_main_image_desc">Priming Image</string>
     
     <string name="action_settings">Settings</string>
     <string name="action_survey">Survey</string>
