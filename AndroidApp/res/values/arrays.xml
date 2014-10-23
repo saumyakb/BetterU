@@ -42,7 +42,7 @@
 		<item>12 PM - 2 PM</item>
 		<item>3 PM - 5 PM</item>
 		<item>6 PM - 8 PM</item>
-		<item>9 PM - 11 AM</item>
+		<item>9 PM - 11 PM</item>
 	</string-array>
     
     <string-array name="pref_meal_timeValues">
@@ -64,7 +64,7 @@
 		<item>12 PM - 2 PM</item>
 		<item>3 PM - 5 PM</item>
 		<item>6 PM - 8 PM</item>
-		<item>9 PM - 11 AM</item>
+		<item>9 PM - 11 PM</item>
 	</string-array>
     
     <string-array name="pref_snack_timeValues">
@@ -77,6 +77,29 @@
 		<item>18</item>
 		<item>21</item>
     </string-array>
+
+    <string-array name="pref_bodyclock_Entries">
+		<item>12 AM - 2 AM</item>
+		<item>3 AM - 5 AM</item>
+		<item>6 AM - 8 AM</item>
+		<item>9 AM - 11 AM</item>
+		<item>12 PM - 2 PM</item>
+		<item>3 PM - 5 PM</item>
+		<item>6 PM - 8 PM</item>
+		<item>9 PM - 11 PM</item>
+	</string-array>
+    
+    <string-array name="pref_bodyclock_Values">
+		<item>0</item>
+		<item>3</item>
+		<item>6</item>
+		<item>9</item>
+		<item>12</item>
+		<item>15</item>
+		<item>18</item>
+		<item>21</item>
+    </string-array>
+    
     
     <string-array name="empty_array">
         

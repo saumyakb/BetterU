@@ -4,6 +4,8 @@ import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -18,8 +20,6 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-
-    
 	Bitmap bitmap;
 	int lastImageRef;
 	
@@ -31,21 +31,36 @@ public class MainActivity extends ActionBarActivity {
 //        PreferenceManager.setDefaultValues(this, R.xml.preference, false);
         
         Button buttonSetWallpaper = (Button) findViewById(R.id.set);
+        Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
         ImageView imagePreview = (ImageView) findViewById(R.id.preview);
         
-        buttonSetWallpaper.setOnClickListener(new OnClickListener(){
+        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+        final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
         
+        buttonSetWallpaper.setOnClickListener(new OnClickListener(){
         	 public void onClick(View v){
         		 WallpaperManager myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         		 try {
         			 myWallpaperManager.setResource(R.drawable.salad);
         			 Toast.makeText(getApplicationContext(), "Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
-        		 }catch(Exception e){
+        		 } catch(Exception e){
+        			 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
         		 }
         	 }
-        	
         });
-    }
+	
+        buttonResetWallpaper.setOnClickListener(new OnClickListener(){
+        	public void onClick(View v){
+        		try {
+        			wallpaperManager.setBitmap(bitmap);
+        			Toast.makeText(getApplicationContext(),  "Original Wallpaper set successfully", Toast.LENGTH_LONG).show();
+        		} catch(Exception e){
+        			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+        		}
+        	}
+        });
+	}
 	
 	@Override
 	public void onResume() {

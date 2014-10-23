@@ -8,12 +8,24 @@
         android:id="@+id/preview" 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/salad"/>
-    
+        android:src="@drawable/salad"
+    	android:contentDescription="@string/act_main_image_desc" />
+ 
     <Button
         android:id="@+id/set"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:background="#cccccc"
-        android:text="Set Wallpaper" />
+        android:text="@string/act_main_button_set" />
+    
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_alignLeft="@+id/preview"
+        android:layout_alignTop="@+id/preview"
+        android:layout_marginTop="46dp"
+        android:background="#cccccc"
+        android:text="@string/act_main_button_reset"
+        />
 </RelativeLayout>
