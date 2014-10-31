@@ -1,12 +1,11 @@
 package edu.cornell.info6130.betterU;
 
+import java.util.Calendar;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.WallpaperManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -24,12 +23,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+// TODO: consider defining request codes in values, to distinguish between request types/actions?
+// TODO: need to enable/disable survey reminder based on user preference setting
+// TODO: calculate actual reminder time based on user setting
+// TODO: handle changes of user setting to sleep hour, and reset alarm appropriately
+
+
 public class MainActivity extends ActionBarActivity {
 	Bitmap bitmap;
 	int lastImageRef;
-	PendingIntent		piSurveyReminder;
-	AlarmManager		alarmManager;
-	BroadcastReceiver	rxBroadcast;
+	AlarmManager		amReminder;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +78,8 @@ public class MainActivity extends ActionBarActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);
-		// do something with preferences on resume here...
+		// use this to reference preferences set by user
+		SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(this);		
 	}
 
 
@@ -135,29 +138,27 @@ public class MainActivity extends ActionBarActivity {
     }
     
     private void RegisterReminderBroadcast() {
-    	rxBroadcast = new BroadcastReceiver() {
-    		// private static final String TAG = "Alarm Example Reciever"
-    		@Override
-    		public void onReceive(Context context, Intent intent) {
-    			// TODO: override with a local notification instead
-    			Toast.makeText(context,  getResources().getString(R.string.alert_survey_message), Toast.LENGTH_LONG).show();
-    		}
-    	};
+    	Intent intent = new Intent(this, SurveyAlarm.class);
+    	intent.putExtra("alarm_message", getResources().getString(R.string.alert_survey_message));
+    	// TODO: 
+    	PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    	// TODO: modify to use debug, set for 1 minute delay ... otherwise calculate time based on user preference
+    	Calendar cal = Calendar.getInstance();
+    	cal.add(Calendar.MINUTE, 1);
     	
-    	registerReceiver(rxBroadcast, new IntentFilter("surveyReminder"));
-    	piSurveyReminder = PendingIntent.getBroadcast(this, 0, new Intent("sample"), 0);
-    	alarmManager = (AlarmManager)(this.getSystemService(Context.ALARM_SERVICE));    	
+    	amReminder = (AlarmManager) getSystemService(ALARM_SERVICE);
+    	amReminder.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
     }
     
-    private void UnregisterReminderBroadcast() {
-    	alarmManager.cancel(piSurveyReminder);
-    	getBaseContext().unregisterReceiver(rxBroadcast);
-    }
+//    private void UnregisterReminderBroadcast() {
+  //  	alarmManager.cancel(piSurveyReminder);
+//    	getBaseContext().unregisterReceiver(rxBroadcast);
+    //}
     
 	@Override
 	public void onDestroy() {
-		unregisterReceiver(rxBroadcast);
+//		unregisterReceiver(rxBroadcast);
 		super.onDestroy();		
 	}
-    
 }

@@ -30,7 +30,8 @@
         <activity android:name="edu.cornell.info6130.betterU.PrefActivity" >
         </activity>
         
-        <receiver android:process=":remote" android:name="Alarm">
+        <receiver 	android:name="edu.cornell.info6130.betterU.SurveyAlarm" 
+            		android:process=":remote">
             <intent-filter>
                 <action android:name="edu.cornell.info6130.betterU.SURVEY_REMINDER"></action>
             </intent-filter>
