@@ -10,27 +10,27 @@
         <item>6</item>        
     </string-array>
 
-    <string-array name="pref_cat_food_typeEntries">
+    <string-array name="pref_food_typeEntries">
 		<item>Dairy</item>
-		<item>Fish &amp; Seafood</item>
+		<item>Fish</item>
 		<item>Fruits</item>
 		<item>Legumes &amp; Soy</item>
 		<item>Grains</item>
 		<item>Nuts &amp; Seeds</item>
-		<item>Meats, Red (e.g., beef, pork, game)</item>
-		<item>Meats, White (e.g., chicken)</item>   
+		<item>Meats (e.g., beef, chicken, pork, etc.)</item>
+		<item>Seafood</item>
 		<item>Vegetables</item>
-		</string-array>
+	</string-array>
     
-    <string-array name="pref_cat_food_typeValues">
+    <string-array name="pref_food_typeValues">
 		<item>dairy</item>
 		<item>fish</item>
 		<item>fruit</item> 
 		<item>legume</item>
 		<item>grain</item>
 		<item>nut</item>
-		<item>meat_red</item>
-		<item>meat_white</item>   
+		<item>meat</item>
+		<item>seafood</item>
 		<item>vegetable</item>
 	</string-array>
     

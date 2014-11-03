@@ -2,12 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.cornell.info6130.betterU"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0"
+     >
 
     <uses-sdk
         android:minSdkVersion="17"
         android:targetSdkVersion="21" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>    
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" >
+    </uses-permission>
+    
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_PRIVILEGED" />
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.SET_ALARM" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" >
+    </uses-permission>
     <uses-permission android:name="android.permission.SET_WALLPAPER" >
     </uses-permission>
     <uses-permission android:name="android.permission.WAKE_LOCK" >
@@ -29,13 +45,18 @@
         </activity>
         <activity android:name="edu.cornell.info6130.betterU.PrefActivity" >
         </activity>
-        
-        <receiver 	android:name="edu.cornell.info6130.betterU.SurveyAlarm" 
-            		android:process=":remote">
-            <intent-filter>
+        <!--  edu.cornell.info6130.betterU;
+                    <intent-filter>
                 <action android:name="edu.cornell.info6130.betterU.SURVEY_REMINDER"></action>
             </intent-filter>
+         
+         -->
+        <receiver android:name=".ReminderReceiver" 
+            		android:process=":remote">
         </receiver>
+        
+        <service android:name=".ReminderService"
+            		android:enabled="true" />
         
     </application>
 
