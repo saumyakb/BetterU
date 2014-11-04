@@ -9,6 +9,7 @@ public class PrefFragment extends PreferenceFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// loads the preferences from specified xml source
 		addPreferencesFromResource(R.xml.preference);
 	} 
 }

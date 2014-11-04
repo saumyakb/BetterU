@@ -3,13 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.androidapp.MainActivity" >
     <item
-        android:id="@+id/action_survey"
+        android:id="@+id/menu_survey"
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_new_event"
-        android:title="@string/action_survey"
+        android:title="@string/menu_survey"
         />
 	<item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:showAsAction="never"/>
+	<item
+        android:id="@+id/menu_email"
+        android:title="@string/menu_email"
+        android:showAsAction="never"/>
+	<!-- remove prior to production release -->
+	<item
+        android:id="@+id/menu_debug"
+        android:title="@string/menu_debug"
         android:showAsAction="never"/>
 </menu>
