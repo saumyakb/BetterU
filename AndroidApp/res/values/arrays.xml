@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="pref_eatHabitTypes_entries">
-        <item>3 Square Meals</item>
-		<item>Snacker</item>        
-    </string-array>
-    
-    <string-array name="pref_eatHabitTypes_values">
-        <item>3</item>
-        <item>6</item>        
-    </string-array>
-
     <string-array name="pref_food_typeEntries">
-		<item>Dairy</item>
+		<item>Beans &amp; Soy</item>
+  		<item>Dairy</item>
 		<item>Fish</item>
 		<item>Fruits</item>
-		<item>Legumes &amp; Soy</item>
 		<item>Grains</item>
 		<item>Nuts &amp; Seeds</item>
-		<item>Meats (e.g., beef, chicken, pork, etc.)</item>
+		<item>Meats</item>
 		<item>Seafood</item>
 		<item>Vegetables</item>
 	</string-array>
     
     <string-array name="pref_food_typeValues">
-		<item>dairy</item>
+		<item>beans</item>
+   		<item>dairy</item>
 		<item>fish</item>
 		<item>fruit</item> 
-		<item>legume</item>
 		<item>grain</item>
 		<item>nut</item>
 		<item>meat</item>

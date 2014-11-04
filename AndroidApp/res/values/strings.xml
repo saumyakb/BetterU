@@ -30,11 +30,11 @@
    
     <string name="pref_bodyclock_title">Sleep Schedule</string>
     <string name="pref_bodyclock_desc"></string><!-- Wake and Sleep Patterns -->
-    <string name="pref_bodyclock_wake_title">Hours Awake</string>
-    <string name="pref_bodyclock_wake_desc">Select your typical waking hours</string>
+    <string name="pref_bodyclock_wake_title">Wake-up Time</string>
+    <string name="pref_bodyclock_wake_desc">When you wake-up</string>
     <string name="pref_bodyclock_wake_default">6</string>
-    <string name="pref_bodyclock_sleep_title">Hours Asleep</string>
-    <string name="pref_bodyclock_sleep_desc">Select your typical sleeping hours</string>
+    <string name="pref_bodyclock_sleep_title">Sleep Time</string>
+    <string name="pref_bodyclock_sleep_desc">When you go to sleep</string>
     <string name="pref_bodyclock_sleep_default">21</string>
     
     <string name="reminder_survey_alert">Reminder: Submit your daily survey!</string>
