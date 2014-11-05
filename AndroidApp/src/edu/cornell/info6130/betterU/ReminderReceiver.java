@@ -3,15 +3,11 @@ package edu.cornell.info6130.betterU;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 public class ReminderReceiver extends BroadcastReceiver {
 	private String LOG_TAG = "ReminderReceiver";
