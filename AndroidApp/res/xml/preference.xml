@@ -15,7 +15,7 @@
 			        android:title="@string/pref_diet_food_title"
 			        android:entries="@array/pref_food_typeEntries"
 			        android:entryValues="@array/pref_food_typeValues"
-			        android:defaultValue="@array/empty_array"
+			        android:defaultValue="@array/pref_food_typeEntries"
 			        />	    
 				<MultiSelectListPreference
 			        android:dialogTitle="@string/pref_diet_schedule_meal"
@@ -24,7 +24,7 @@
 			        android:title="@string/pref_diet_schedule_meal"
 			        android:entries="@array/pref_meal_timeEntries"
 			        android:entryValues="@array/pref_meal_timeValues"
-			        android:defaultValue="@array/empty_array"
+			        android:defaultValue="@array/pref_meal_defaultValues"
 			        />	    
 				<MultiSelectListPreference
 			        android:dialogTitle="@string/pref_diet_schedule_snack"
@@ -33,7 +33,7 @@
 			        android:title="@string/pref_diet_schedule_snack"
 			        android:entries="@array/pref_snack_timeEntries"
 			        android:entryValues="@array/pref_snack_timeValues"
-			        android:defaultValue="@array/empty_array"
+			        android:defaultValue="@array/pref_snack_defaultValues"
 			        />
 			</PreferenceCategory>
 		</PreferenceScreen>

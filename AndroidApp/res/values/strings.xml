@@ -33,7 +33,7 @@
     <string name="pref_bodyclock_wake_title">Wake-up Time</string>
     <string name="pref_bodyclock_wake_desc">When you wake-up</string>
     <string name="pref_bodyclock_wake_default">6</string>
-    <string name="pref_bodyclock_sleep_title">Sleep Time</string>
+    <string name="pref_bodyclock_sleep_title">Bed Time</string>
     <string name="pref_bodyclock_sleep_desc">When you go to sleep</string>
     <string name="pref_bodyclock_sleep_default">21</string>
     

@@ -2,11 +2,10 @@ package edu.cornell.info6130.betterU;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Set;
 import java.util.TimeZone;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.WallpaperManager;
 import android.content.Context;
@@ -142,7 +141,32 @@ public class MainActivity extends ActionBarActivity {
         		// TODO: ReminderService/Receiver TEST
         		try {
         			Context context = getApplicationContext();
-    				Toast.makeText(context,  "Feature not available.",  Toast.LENGTH_SHORT).show();
+//    				Toast.makeText(context,  "Feature not available.",  Toast.LENGTH_SHORT).show();
+        			
+        			// get selected food types
+        			Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
+        			Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
+        			Set<String> snackTimes = appPreferences.getStringSet("pref_snack_list_key", null);
+        			
+        			PhotoManager iPhoto = new PhotoManager();
+        			Uri nextPhoto = iPhoto.getPrimingPhoto(foodPlate, mealTimes, snackTimes);
+        			
+        			if (nextPhoto != null) {
+            			/*
+    						ImageView imagePreview = (ImageView) findViewById(R.id.preview);
+    						        
+    						final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+    						final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+    						final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+            			 */
+        			}
+        			
+        			// debug statement
+        			Toast.makeText(context, nextPhoto.toString(),  Toast.LENGTH_SHORT).show();
+        			
+        			
+//        			Toast.makeText(context,  iPhoto.pickFood(new String[] {"banana", "apple", "toast", "pickle", "legumes", "meat", "fish", "seafood"})
+//        						,  Toast.LENGTH_SHORT).show();
 /*
         			// set pendingIntent to a load web page for the daily survey
         			String surveyPath = getResources().getString(R.string.uri_survey);
