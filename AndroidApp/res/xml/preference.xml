@@ -15,7 +15,7 @@
 			        android:title="@string/pref_diet_food_title"
 			        android:entries="@array/pref_food_typeEntries"
 			        android:entryValues="@array/pref_food_typeValues"
-			        android:defaultValue="@array/pref_food_typeEntries"
+			        android:defaultValue="@array/pref_food_defaultValues"
 			        />	    
 				<MultiSelectListPreference
 			        android:dialogTitle="@string/pref_diet_schedule_meal"

@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity {
 		    	// start with system time
 		    	cal.setTimeInMillis(System.currentTimeMillis());
 		    	// get user specified time for bed (default to 21)
-		    	String tempSleep = appPreferences.getString("pref_bodyclock_sleep_key", "21");
+		    	String tempSleep = appPreferences.getString("pref_bodyclock_sleep_key", getResources().getString(R.string.pref_bodyclock_sleep_default));
 		    	// convert to int
 		    	Integer sleepTime = Integer.valueOf(tempSleep);
 		    	// start with sleep time

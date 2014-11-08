@@ -8,7 +8,6 @@
 		<item>Grains</item>
 		<item>Nuts &amp; Seeds</item>
 		<item>Meats</item>
-		<item>Seafood</item>
 		<item>Vegetables</item>
 	</string-array>
     
@@ -18,89 +17,98 @@
 		<item>fish</item>
 		<item>fruit</item> 
 		<item>grain</item>
-		<item>nut</item>
+		<item>nuts</item>
 		<item>meat</item>
-		<item>seafood</item>
-		<item>vegetable</item>
+		<item>vegetables</item>
 	</string-array>
-    
+
+    <string-array name="pref_food_defaultValues">
+		<item>beans</item>
+   		<item>dairy</item>
+		<item>fish</item>
+		<item>fruit</item> 
+		<item>grain</item>
+		<item>nuts</item>
+		<item>meat</item>
+		<item>vegetables</item>
+	</string-array>
+        
     <string-array name="pref_meal_timeEntries">
-		<item>12 AM - 2 AM</item>
-		<item>3 AM - 5 AM</item>
-		<item>6 AM - 8 AM</item>
-		<item>9 AM - 11 AM</item>
-		<item>12 PM - 2 PM</item>
-		<item>3 PM - 5 PM</item>
-		<item>6 PM - 8 PM</item>
-		<item>9 PM - 11 PM</item>
+		<item> 5 AM –  8 AM</item>
+		<item> 8 AM – 11 AM</item>
+		<item>11 AM –  2 PM</item>
+		<item> 2 PM –  5 PM</item>
+		<item> 5 PM –  8 PM</item>
+		<item> 8 PM – 11 PM</item>
+		<item>11 PM –  2 AM</item>
+		<item> 2 AM –  5 AM</item>
 	</string-array>
     
     <string-array name="pref_meal_timeValues">
-		<item>00</item>
-		<item>03</item>
-		<item>06</item>
-		<item>09</item>
-		<item>12</item>
-		<item>15</item>
-		<item>18</item>
-		<item>21</item>
+		<item>05</item>
+		<item>08</item>
+		<item>11</item>
+		<item>14</item>
+		<item>17</item>
+		<item>20</item>
+		<item>23</item>
+		<item>02</item>
     </string-array>
 
     <string-array name="pref_meal_defaultValues">
-		<item>09</item>
-		<item>12</item>
-		<item>18</item>
+		<item>05</item>
+		<item>11</item>
+		<item>17</item>
     </string-array>
     
     
     <string-array name="pref_snack_timeEntries">
-		<item>12 AM - 2 AM</item>
-		<item>3 AM - 5 AM</item>
-		<item>6 AM - 8 AM</item>
-		<item>9 AM - 11 AM</item>
-		<item>12 PM - 2 PM</item>
-		<item>3 PM - 5 PM</item>
-		<item>6 PM - 8 PM</item>
-		<item>9 PM - 11 PM</item>
+		<item> 5 AM –  8 AM</item>
+		<item> 8 AM – 11 AM</item>
+		<item>11 AM –  2 PM</item>
+		<item> 2 PM –  5 PM</item>
+		<item> 5 PM –  8 PM</item>
+		<item> 8 PM – 11 PM</item>
+		<item>11 PM –  2 AM</item>
+		<item> 2 AM –  5 AM</item>
 	</string-array>
     
     <string-array name="pref_snack_timeValues">
-		<item>00</item>
-		<item>03</item>
-		<item>06</item>
-		<item>09</item>
-		<item>12</item>
-		<item>15</item>
-		<item>18</item>
-		<item>21</item>
+		<item>05</item>
+		<item>08</item>
+		<item>11</item>
+		<item>14</item>
+		<item>17</item>
+		<item>20</item>
+		<item>23</item>
+		<item>02</item>
     </string-array>
 
     <string-array name="pref_snack_defaultValues">
-		<item>15</item>
-		<item>21</item>
+		<item>14</item>
     </string-array>
     
     
     <string-array name="pref_bodyclock_Entries">
-		<item>12 AM - 2 AM</item>
-		<item>3 AM - 5 AM</item>
-		<item>6 AM - 8 AM</item>
-		<item>9 AM - 11 AM</item>
-		<item>12 PM - 2 PM</item>
-		<item>3 PM - 5 PM</item>
-		<item>6 PM - 8 PM</item>
-		<item>9 PM - 11 PM</item>
+		<item> 5 AM –  8 AM</item>
+		<item> 8 AM – 11 AM</item>
+		<item>11 AM –  2 PM</item>
+		<item> 2 PM –  5 PM</item>
+		<item> 5 PM –  8 PM</item>
+		<item> 8 PM – 11 PM</item>
+		<item>11 PM –  2 AM</item>
+		<item> 2 AM –  5 AM</item>
 	</string-array>
     
     <string-array name="pref_bodyclock_Values">
-		<item>00</item>
-		<item>03</item>
-		<item>06</item>
-		<item>09</item>
-		<item>12</item>
-		<item>15</item>
-		<item>18</item>
-		<item>21</item>
+		<item>05</item>
+		<item>08</item>
+		<item>11</item>
+		<item>14</item>
+		<item>17</item>
+		<item>20</item>
+		<item>23</item>
+		<item>02</item>
     </string-array>
     
     
