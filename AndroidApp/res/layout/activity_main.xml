@@ -4,12 +4,11 @@
     android:layout_height="match_parent"
     tools:context="edu.cornell.info6130.betterU.MainActivity" >
 
-    <ImageView 
-        android:id="@+id/preview" 
+    <ImageView
+        android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/salad"
-    	android:contentDescription="@string/act_main_image_desc" />
+        android:contentDescription="@string/act_main_image_desc" />
  
     <Button
         android:id="@+id/set"

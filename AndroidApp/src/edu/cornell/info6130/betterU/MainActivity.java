@@ -1,5 +1,7 @@
 package edu.cornell.info6130.betterU;
 
+import java.io.File;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Set;
@@ -47,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);	
         //
         setContentView(R.layout.activity_main);
-        
+
         Button buttonSetWallpaper = (Button) findViewById(R.id.set);
         Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
         ImageView imagePreview = (ImageView) findViewById(R.id.preview);
@@ -60,7 +62,10 @@ public class MainActivity extends ActionBarActivity {
         	 public void onClick(View v){
         		 WallpaperManager myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
         		 try {
-        			 myWallpaperManager.setResource(R.drawable.salad);
+        			 ImageView ivw = (ImageView) findViewById(R.id.preview);
+        			 
+        			 Bitmap bm = ((BitmapDrawable)ivw.getDrawable()).getBitmap();
+        			 myWallpaperManager.setBitmap(bm);
         			 Toast.makeText(getApplicationContext(), "Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
         		 } catch(Exception e){
         			 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
@@ -146,29 +151,19 @@ public class MainActivity extends ActionBarActivity {
         			// get selected food types
         			Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
         			Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
-        			Set<String> snackTimes = appPreferences.getStringSet("pref_snack_list_key", null);
+//        			Set<String> snackTimes = appPreferences.getStringSet("pref_snack_list_key", null);
+
+        			// get next priming photo
+        			PhotoManager iPhoto = new PhotoManager(context);
+        			Drawable displayImage = iPhoto.getPrimingPhoto(foodPlate, mealTimes);
         			
-        			PhotoManager iPhoto = new PhotoManager();
-        			Uri nextPhoto = iPhoto.getPrimingPhoto(foodPlate, mealTimes, snackTimes);
-        			
-        			if (nextPhoto != null) {
-            			/*
-    						ImageView imagePreview = (ImageView) findViewById(R.id.preview);
-    						        
-    						final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
-    						final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-    						final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
-            			 */
-        			}
-        			
-        			// debug statement
-        			Toast.makeText(context, nextPhoto.toString(),  Toast.LENGTH_SHORT).show();
-        			
-        			
-//        			Toast.makeText(context,  iPhoto.pickFood(new String[] {"banana", "apple", "toast", "pickle", "legumes", "meat", "fish", "seafood"})
-//        						,  Toast.LENGTH_SHORT).show();
+        			// get handle to object used to display image
+        			ImageView img = (ImageView) findViewById(R.id.preview);
+                    // set image to ImageView
+                    img.setImageDrawable(displayImage);
+
 /*
-        			// set pendingIntent to a load web page for the daily survey
+                    // set pendingIntent to a load web page for the daily survey
         			String surveyPath = getResources().getString(R.string.uri_survey);
         	    	Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
         	    	//PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0
