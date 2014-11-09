@@ -1,9 +1,8 @@
 package edu.cornell.info6130.betterU;
 
-import java.io.File;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Set;
 import java.util.TimeZone;
 
@@ -34,8 +33,8 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	private static int SURVEY_REMINDER_REQUESTCODE = 1234567; 
-	private Bitmap bitmap;
-	private int lastImageRef;
+//	private Bitmap bitmap;
+//	private int lastImageRef;
 	private AlarmManager		amReminder;
 	private SharedPreferences 	appPreferences;
 	private String LOG_TAG = "MainActivity";
@@ -52,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
 
         Button buttonSetWallpaper = (Button) findViewById(R.id.set);
         Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
-        ImageView imagePreview = (ImageView) findViewById(R.id.preview);
+//        ImageView imagePreview = (ImageView) findViewById(R.id.preview);
         
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
@@ -95,15 +94,15 @@ public class MainActivity extends ActionBarActivity {
 	        			case "pref_reminder_key":
 	        			case "pref_bodyclock_sleep_key":
 	                		if (BuildConfig.DEBUG){                 			
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", String.valueOf(appPreferences.getBoolean("pref_reminder_key", true)));
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", appPreferences.getString("pref_bodyclock_sleep_key", ""));
+	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", String.valueOf(sharedPreferences.getBoolean("pref_reminder_key", true)));
+	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", sharedPreferences.getString("pref_bodyclock_sleep_key", ""));
 	                		}		
 	                		// toggling reminders or sleep time should reset notification logic
 	        				RegisterReminderBroadcast();
 	        				break;
 	        			default:
 	                		if (BuildConfig.DEBUG){ 
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + appPreferences.getString(key, ""));
+	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + sharedPreferences.getString(key, ""));
 	                		}				
 	        				break;
 	        		}
@@ -159,9 +158,9 @@ public class MainActivity extends ActionBarActivity {
         			
         			// get handle to object used to display image
         			ImageView img = (ImageView) findViewById(R.id.preview);
+
                     // set image to ImageView
                     img.setImageDrawable(displayImage);
-
 /*
                     // set pendingIntent to a load web page for the daily survey
         			String surveyPath = getResources().getString(R.string.uri_survey);
@@ -287,7 +286,7 @@ public class MainActivity extends ActionBarActivity {
 		    	}
 		    	if (BuildConfig.DEBUG) {
 		    		// dump next alarm
-		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		    		sdf.setTimeZone(TimeZone.getTimeZone("GMT+5"));
 		    		Log.d(LOG_TAG + ".RegisterReminderBroadcast", sdf.format(cal.getTime()));
 		    	}
