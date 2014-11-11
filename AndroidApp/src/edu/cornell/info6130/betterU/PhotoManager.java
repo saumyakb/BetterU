@@ -3,9 +3,11 @@ package edu.cornell.info6130.betterU;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
@@ -67,7 +69,7 @@ public class PhotoManager {
 				// pick a food from preference list
 				String randomFood = pickFood(PreferredFoodList);
 				// pick a photo in that food category
-				String randomFile = pickPhoto(randomFood);
+				String randomFile = pickPhoto(randomFood, activeMeal);
 			 
 				// open handle to file from asset manager
 				InputStream assetReader = _am.open(randomFood + File.separator + randomFile);
@@ -111,22 +113,62 @@ public class PhotoManager {
 		 return food;
 	}
 	
-	private String pickPhoto(String Food) {
+	private String pickPhoto(String food) {
 		String filename = null;
 		
 		try {
-			filename = this.pickItem(_am.list(Food));
+			filename = this.pickItem(_am.list(food));
 		} catch (Exception ex) {
 			Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
 		}
 		
 		// debug output
 		if (BuildConfig.DEBUG)
-			Log.v(LOG_TAG + ".getPrimingPhoto", Food + File.separator + filename);
+			Log.v(LOG_TAG + ".getPrimingPhoto", food + File.separator + filename);
 		
 		return filename;
 	}
-	 
+
+	private String pickPhoto(String food, Meal activeMeal) {
+		String filename = null;
+		
+		try {
+			// cache local list of photos
+			String[] foodList = _am.list(food);
+			
+			while ( ((filename == null) || filename.isEmpty()) && (foodList.length != 0) ) {
+				// get next random photo
+				filename = this.pickItem(foodList);
+				// verify it is meal compatible
+				if (!filename.contains(activeMeal.getKey())) {
+					// debug output
+					if (BuildConfig.DEBUG)
+						Log.v(LOG_TAG + ".pickPhoto", "Discarding food photo, meal type conflict: " + filename);
+
+					// if not, discard from list and pick again
+					List<String> tempList = new ArrayList<String>(Arrays.asList(foodList));
+					tempList.remove(filename);
+					foodList = tempList.toArray(new String[0]);
+					filename = null;					
+				}
+			}
+			
+			// if meal specific food is not found, just pick a random photo from this food group as fallback
+			if (foodList.length == 0) {
+				filename = pickPhoto(food);
+			}
+			
+		} catch (Exception ex) {
+			Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
+		}
+		
+		// debug output
+		if (BuildConfig.DEBUG)
+			Log.v(LOG_TAG + ".pickPhoto", food + File.separator + filename);
+		
+		return filename;
+	}
+	
 	//  returns active Meal
 	private Meal pickMeal(Set<String> MealTimes) {
 		boolean allowMeal = true;
