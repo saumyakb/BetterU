@@ -2,9 +2,7 @@ package edu.cornell.info6130.betterU;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -51,7 +49,6 @@ public class MainActivity extends ActionBarActivity {
 
         Button buttonSetWallpaper = (Button) findViewById(R.id.set);
         Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
-//        ImageView imagePreview = (ImageView) findViewById(R.id.preview);
         
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
@@ -227,7 +224,7 @@ public class MainActivity extends ActionBarActivity {
 	        	// set user expectations
 	        	Toast.makeText(this, "Opening Survey...", Toast.LENGTH_SHORT).show();
 	        	// get path to survey
-	        	String surveyPath = getResources().getString(R.string.uri_survey);
+	        	String surveyPath = getResources().getString(R.string.uri_survey_daily);
 
 	        	try {
 	        		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
@@ -259,14 +256,16 @@ public class MainActivity extends ActionBarActivity {
     
     private void RegisterReminderBroadcast() {
     	try {
+    		long alarmInterval = AlarmManager.INTERVAL_DAY;
 	    	Intent intent = new Intent(this, ReminderReceiver.class);
 	    	
 	    	intent.putExtra("alarm_message", getResources().getString(R.string.reminder_survey_alert));
+	    	intent.putExtra("alarm_url", getResources().getString(R.string.uri_survey_daily));
 	    	// cancel any existing reminder
 	    	PendingIntent pendingIntent = PendingIntent.getBroadcast(this, SURVEY_REMINDER_REQUESTCODE, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	    	
 	    	if (appPreferences.getBoolean("pref_reminder_key", true)) {
-		    	// TODO: modify to use debug, set for 1 minute delay ... otherwise calculate time based on user preference
+		    	// if debug, set for 1 minute delay ... otherwise calculate time based on user preference
 		    	Calendar cal = Calendar.getInstance();
 		    	// start with system time
 		    	cal.setTimeInMillis(System.currentTimeMillis());
@@ -274,27 +273,28 @@ public class MainActivity extends ActionBarActivity {
 		    	String tempSleep = appPreferences.getString("pref_bodyclock_sleep_key", getResources().getString(R.string.pref_bodyclock_sleep_default));
 		    	// convert to int
 		    	Integer sleepTime = Integer.valueOf(tempSleep);
-		    	// start with sleep time
-		    	cal.set(Calendar.HOUR_OF_DAY, sleepTime);		    	
 		    	
 		    	if (BuildConfig.DEBUG) {
 		    		// trigger immediately
-		    		cal.add(Calendar.DAY_OF_YEAR, -1);
+		    		cal.add(Calendar.MINUTE, 1);
+		    		// override default interval from one day to 1 minute (for testing)
+		    		alarmInterval = 60000;
 		    	} else {
+			    	// start with sleep time
+			    	cal.set(Calendar.HOUR_OF_DAY, sleepTime);		
 		    		// turn clock back by 3 hours
 		    		cal.add(Calendar.HOUR_OF_DAY, -3);
 		    	}
 		    	if (BuildConfig.DEBUG) {
-		    		// dump next alarm
-		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-		    		sdf.setTimeZone(TimeZone.getTimeZone("GMT+5"));
+		    		// dump next alarm time
+		    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z", getResources().getConfiguration().locale);
+		    		// sdf.setTimeZone(TimeZone.getDefault());
 		    		Log.d(LOG_TAG + ".RegisterReminderBroadcast", sdf.format(cal.getTime()));
 		    	}
-		    	//PendingIntent pendingIntent = PendingIntent.getBroadcast(this, SURVEY_REMINDER_REQUESTCODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		    																							// .INTERVAL_FIFTEEN_MINUTES
-		    																							// .INTERVAL_DAY
-		    	//amReminder.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-		    	amReminder.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+		    	// set alarm
+		    	// amReminder.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmInterval, pendingIntent);
+		    	amReminder.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmInterval, pendingIntent);
 		    	if (BuildConfig.DEBUG) {
 		    		Log.d(LOG_TAG + ".RegisterReminderBroadcast", "Reminder Scheduled");
 		    	}		    	

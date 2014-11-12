@@ -20,8 +20,9 @@ import android.util.Log;
 	
 
 public class PhotoManager {
-
+	
 	private final String LOG_TAG = "MainActivity";	
+	private final Locale _locale;
 	// breakfast, lunch, dinner
 	private final Meal[] _meals = {new Meal("B", 02, 11), new Meal("L", 11, 14), new Meal("D", 14, 02)};
 	
@@ -34,6 +35,7 @@ public class PhotoManager {
 	 */
 	public PhotoManager(Context context) {
 		_am = context.getAssets();
+		_locale = context.getResources().getConfiguration().locale;
 		
 		return;
 	}
@@ -192,7 +194,7 @@ public class PhotoManager {
 			// populate new set
 			allowedTimes.addAll(MealTimes);
 			// convert to military hour, in string format
-			String thisHour = String.format(Locale.US, "%02d", currentHour);
+			String thisHour = String.format(_locale, "%02d", currentHour);
 			Log.v(LOG_TAG + ".getMeal", "currentHour: " + thisHour);
 			
 			// assume it is not allowed
