@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -40,11 +41,21 @@ public class MainActivity extends ActionBarActivity {
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		// Always call the superclass first
         super.onCreate(savedInstanceState);
+        
         // set default preferences
         PreferenceManager.setDefaultValues(this, R.xml.preference, false);
         // get handle to user's preferences for this app
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);	
+        
+        if (savedInstanceState != null) {
+//        	ImageView ivw = (ImageView) findViewById(R.id.preview);
+//        	
+//        	ivw.setImageBitmap((Bitmap) savedInstanceState.getParcelable("background"));
+//        	savedInstanceState.putParcelable("background",  null);
+        }
+        
         //
         setContentView(R.layout.activity_main);
 
@@ -84,8 +95,7 @@ public class MainActivity extends ActionBarActivity {
         // register shared preference listener to handle when user changes settings
         appPreferences.registerOnSharedPreferenceChangeListener( new SharedPreferences.OnSharedPreferenceChangeListener() {
         	@Override
-			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-					String key) {
+			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         		try {
 					// debug output
 	        		switch (key) {        			
@@ -100,7 +110,7 @@ public class MainActivity extends ActionBarActivity {
 	        				break;
 	        			default:	        				
 	                		if (BuildConfig.DEBUG){
-	                			// NOTE: code below will throw error on hashsets, etc. (since it assumes a String value)
+	                			// NOTE: code below will throw error on hash-sets, etc. (since it assumes a String value)
 	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + sharedPreferences.getString(key, ""));
 	                		}				
 	        				break;
@@ -122,6 +132,21 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	@Override
+	protected void onSaveInstanceState(Bundle toSave) {		
+		// TODO: add compression logic, will fail if bitmap > 1 MB
+		
+		// put image from imageView into storage (e.g., orientation change, etc)
+//		ImageView ivw = (ImageView) findViewById(R.id.preview);
+//		ivw.buildDrawingCache();
+//		Parcelable bm = ivw.getDrawingCache();
+		
+//		toSave.putParcelable("background",  bm);
+		
+		// Always call the superclass so it can save the view hierarchy state
+		super.onSaveInstanceState(toSave);
+	}
+	
+	@Override
 	public void onResume() {
 		super.onResume();
 		// use this to reference preferences set by user
@@ -133,6 +158,15 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        
+        // hide diagnostics menu from release build
+        if(!BuildConfig.DEBUG) {
+        	// hide email menu
+        	menu.findItem(R.id.menu_email).setVisible(false);
+        	// hide diagnostics/debug menu
+        	menu.findItem(R.id.menu_debug).setVisible(false);
+        }
+
         return true;
     }
 
