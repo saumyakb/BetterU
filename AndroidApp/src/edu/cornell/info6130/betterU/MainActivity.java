@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
 
 
@@ -97,8 +98,9 @@ public class MainActivity extends ActionBarActivity {
 	                		// toggling reminders or sleep time should reset notification logic
 	        				RegisterReminderBroadcast();
 	        				break;
-	        			default:
-	                		if (BuildConfig.DEBUG){ 
+	        			default:	        				
+	                		if (BuildConfig.DEBUG){
+	                			// NOTE: code below will throw error on hashsets, etc. (since it assumes a String value)
 	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + sharedPreferences.getString(key, ""));
 	                		}				
 	        				break;
@@ -154,11 +156,19 @@ public class MainActivity extends ActionBarActivity {
         			
         			// get handle to object used to display image
         			ImageView img = (ImageView) findViewById(R.id.preview);
-
-                    // set image to ImageView
-                    img.setImageDrawable(displayImage);
+        			img.setScaleType(ScaleType.FIT_CENTER);
+        			                    
+                    if (displayImage == null) {                    	
+                    	img.setImageDrawable(getResources().getDrawable(R.drawable.bg_plain2));
+                    } else {
+                    	// set image to ImageView
+                    	img.setImageDrawable(displayImage);
+                    }
+                    
         		} catch (Exception ex2) {
-        			Log.e(LOG_TAG + ".onOptionsItemSelected", ex2.toString(), ex2);
+        			if (BuildConfig.DEBUG) {
+        				Log.e(LOG_TAG + ".onOptionsItemSelected", ex2.toString(), ex2);
+        			}
         		}
         		
         		break;
@@ -222,7 +232,9 @@ public class MainActivity extends ActionBarActivity {
     			surveyPath += uriParm + participantID;
     		}
     		
-    		Log.v(LOG_TAG + ".ShowSurvey", surveyPath);
+    		if (BuildConfig.DEBUG) {
+    			Log.v(LOG_TAG + ".ShowSurvey", surveyPath);
+    		}
     		
     		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
     		startActivity(browserIntent);

@@ -32,7 +32,9 @@ public class ReminderReceiver extends BroadcastReceiver {
     		}
 			
 		} catch (Exception ex) {
-			Log.e(LOG_TAG + ".onReceive", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".onReceive", ex.toString(), ex);
+			}
 		}
 	}
 	
@@ -73,7 +75,9 @@ public class ReminderReceiver extends BroadcastReceiver {
 				nm.notify(SURVEY_REMINDER_REQUESTCODE, notif);
 */	    	
 		} catch (Exception ex) {
-			Log.e(LOG_TAG + ".createNotification", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".createNotification", ex.toString(), ex);
+			}
 		}
     	/*
 		// build notification

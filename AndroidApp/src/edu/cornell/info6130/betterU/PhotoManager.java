@@ -80,7 +80,9 @@ public class PhotoManager {
 			}
 
 		} catch (Exception ex) {
-			 Log.e(LOG_TAG + ".getPrimingPhoto", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".getPrimingPhoto", ex.toString(), ex);
+			}
 		}
 		 // return photo
         return randomPhoto;
@@ -100,7 +102,9 @@ public class PhotoManager {
 					exists = Arrays.asList(_am.list("")).contains(food);
 				} catch (IOException ie) {
 					exists = false;
-					Log.d(LOG_TAG + ".pickFood", "Invalid Asset folder: " + food + System.getProperty("line.separator") + ie.toString(), ie);
+					if (BuildConfig.DEBUG) {
+						Log.d(LOG_TAG + ".pickFood", "Invalid Asset folder: " + food + System.getProperty("line.separator") + ie.toString(), ie);
+					}
 				}
 			}
 			// fail-safe for no valid food category...
@@ -110,7 +114,9 @@ public class PhotoManager {
 			}
 			
 		} catch (Exception ex) {
-			Log.e(LOG_TAG + ".pickFood", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".pickFood", ex.toString(), ex);
+			}
 		}
 		 return food;
 	}
@@ -121,12 +127,15 @@ public class PhotoManager {
 		try {
 			filename = this.pickItem(_am.list(food));
 		} catch (Exception ex) {
-			Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
+			}
 		}
 		
 		// debug output
-		if (BuildConfig.DEBUG)
+		if (BuildConfig.DEBUG) {
 			Log.v(LOG_TAG + ".getPrimingPhoto", food + File.separator + filename);
+		}
 		
 		return filename;
 	}
@@ -144,8 +153,9 @@ public class PhotoManager {
 				// verify it is meal compatible
 				if (!filename.contains(activeMeal.getKey())) {
 					// debug output
-					if (BuildConfig.DEBUG)
+					if (BuildConfig.DEBUG) {
 						Log.v(LOG_TAG + ".pickPhoto", "Discarding food photo, meal type conflict: " + filename);
+					}
 
 					// if not, discard from list and pick again
 					List<String> tempList = new ArrayList<String>(Arrays.asList(foodList));
@@ -161,12 +171,15 @@ public class PhotoManager {
 			}
 			
 		} catch (Exception ex) {
-			Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
+			if (BuildConfig.DEBUG) {
+				Log.e(LOG_TAG + ".pickPhoto", ex.toString(), ex);
+			}
 		}
 		
 		// debug output
-		if (BuildConfig.DEBUG)
+		if (BuildConfig.DEBUG) {
 			Log.v(LOG_TAG + ".pickPhoto", food + File.separator + filename);
+		}
 		
 		return filename;
 	}
@@ -195,7 +208,10 @@ public class PhotoManager {
 			allowedTimes.addAll(MealTimes);
 			// convert to military hour, in string format
 			String thisHour = String.format(_locale, "%02d", currentHour);
-			Log.v(LOG_TAG + ".getMeal", "currentHour: " + thisHour);
+			
+			if (BuildConfig.DEBUG) {
+				Log.v(LOG_TAG + ".getMeal", "currentHour: " + thisHour);
+			}
 			
 			// assume it is not allowed
 			allowMeal = false;
@@ -223,11 +239,12 @@ public class PhotoManager {
 		if (!allowMeal)
 			activeMeal = null;
 		
-		if (BuildConfig.DEBUG)
+		if (BuildConfig.DEBUG) {
 			if (allowMeal)
 				Log.v(LOG_TAG + ".getMeal", activeMeal.getKey());
 			else
 				Log.v(LOG_TAG + ".getMeal", "Not an allowed meal time.");
+		}
 		
 		return activeMeal;
 	}
@@ -241,7 +258,9 @@ public class PhotoManager {
 				 randomItem = ItemList[new Random().nextInt(ItemList.length)];
 			 }
 		 } catch (Exception ex) {
-			 Log.e(LOG_TAG + ".pickFood", ex.toString(), ex);
+			 if (BuildConfig.DEBUG) {
+				 Log.e(LOG_TAG + ".pickFood", ex.toString(), ex);
+			 }
 		 }
 		 
 		 return randomItem;

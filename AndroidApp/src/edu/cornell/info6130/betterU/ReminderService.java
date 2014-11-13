@@ -32,7 +32,9 @@ public class ReminderService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.i("ReminderService", "Recieved start id " + startId + ": " + intent);
+		if (BuildConfig.DEBUG) {
+			Log.i("ReminderService", "Recieved start id " + startId + ": " + intent);
+		}
 		// run until it is explicitly stopped
 		return START_STICKY;
 	}
