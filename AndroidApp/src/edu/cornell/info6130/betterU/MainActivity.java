@@ -1,9 +1,11 @@
 package edu.cornell.info6130.betterU;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Set;
-
+import java.util.TimeZone;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.WallpaperManager;
@@ -17,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -54,6 +57,20 @@ public class MainActivity extends ActionBarActivity {
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
         
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+	    byte[] byteArray = stream.toByteArray();
+	    Log.d("Byte String:", "byte string allocated");
+	    
+	    String imageEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+	    Log.d("Image Log:", imageEncoded);
+	    
+	    
+	   SharedPreferences.Editor editor = appPreferences.edit();
+       editor.putString("imagePreferance", imageEncoded);
+       editor.commit();
+        
+       //button to set wallpaper based on image previewed on the mainpage
         buttonSetWallpaper.setOnClickListener(new OnClickListener(){
         	 public void onClick(View v){
         		 WallpaperManager myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
@@ -69,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
         	 }
         });
 	
+      //button to set original wallpaper
         buttonResetWallpaper.setOnClickListener(new OnClickListener(){
         	public void onClick(View v){
         		try {
@@ -79,6 +97,44 @@ public class MainActivity extends ActionBarActivity {
         		}
         	}
         });
+        
+      //intent to set a wallpaper 
+        Log.d("set Intent ", "first intent");
+        
+	     Intent myIntent = new Intent(this, setWallpaper.class);
+	     PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 
+	    		 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+	     Calendar cal = Calendar.getInstance(); 
+	     //set timer after 30 seconds from instance
+	     long setWallpaper = cal.getTimeInMillis()+30000;
+	    
+	    // start with system time
+	    cal.setTimeInMillis(System.currentTimeMillis());
+
+	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+ 		sdf.setTimeZone(TimeZone.getTimeZone("GMT+5"));
+ 		Log.d("RegisterReminderBroadcast", sdf.format(cal.getTime()));
+ 		Log.d("Set Wallpaper", sdf.format(setWallpaper));
+	    
+ 		//long setOriginal = cal.getTimeInMillis() + 50000;
+	      
+	         //Intent to set original wallpaper
+	    // Intent originalIntent = new Intent(this, setOriginal.class);
+		 //originalIntent.putExtra("image",byteArray);
+		  //   PendingIntent originalPendingIntent = PendingIntent.getBroadcast(this, 
+		    //		 0, originalIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+	      
+      
+	  AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+	  Log.d("set Alarm ", "first a");
+	  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setWallpaper,
+			  40000, pendingIntent);
+	  
+	 // Log.d("set Alarm for Original ", "alarm to set original wallpaper ");
+	  //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setOriginal,
+		//	  40000, originalPendingIntent);
+
         
         // register shared preference listener to handle when user changes settings
         appPreferences.registerOnSharedPreferenceChangeListener( new SharedPreferences.OnSharedPreferenceChangeListener() {
