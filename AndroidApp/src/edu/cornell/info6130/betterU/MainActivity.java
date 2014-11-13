@@ -139,7 +139,6 @@ public class MainActivity extends ActionBarActivity {
         switch(item.getItemId()) {
         	// used solely for testing new features or debugging existing features 'on command'
         	case R.id.menu_debug:
-        		// TODO: ReminderService/Receiver TEST
         		try {
         			Context context = getApplicationContext();
 //    				Toast.makeText(context,  "Feature not available.",  Toast.LENGTH_SHORT).show();
@@ -158,41 +157,6 @@ public class MainActivity extends ActionBarActivity {
 
                     // set image to ImageView
                     img.setImageDrawable(displayImage);
-/*
-                    // set pendingIntent to a load web page for the daily survey
-        			String surveyPath = getResources().getString(R.string.uri_survey);
-        	    	Intent bi = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
-        	    	//PendingIntent pi = PendingIntent.getActivity(getApplicationContext(), 0
-        	    			//, new Intent() // browserIntent
-        	    			//, PendingIntent.FLAG_UPDATE_CURRENT);
-        			
-        			int SURVEY_REMINDER_REQUESTCODE = 1234567;
-        			CharSequence app_name = getText(R.string.app_name);
-        			CharSequence message = getText(R.string.reminder_survey_alert);
-        			Context context = getApplicationContext();
-        			
-        			NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        			
-        			PendingIntent contentIntent = PendingIntent.getActivity(context, 0, new Intent(), 0);
-        			Notification notif = new Notification(R.drawable.ic_launcher, message, System.currentTimeMillis());
-        			notif.setLatestEventInfo(context, app_name, message, contentIntent);
-        			nm.notify(1, notif);
-        				 //}        			
-        				  */
-        			/*
-        			Intent resultIntent = new Intent(this, MainActivity.class);
-        			PendingIntent rPI = PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);        			
-        	    	// @drawable/ic_action_new_event
-        	    	NotificationCompat.Builder sReminder = new NotificationCompat.Builder(this)
-        	    												.setSmallIcon(R.drawable.ic_launcher)
-//        	    												.addAction(R.drawable.ic_action_new_event, "open", pi)
-        	    												.setContentTitle(title)
-        	    												.setContentText(message);
-        	    	sReminder.setContentIntent(rPI);
-        	    	
-        	    	NotificationManager notifyMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        	    	notifyMgr.notify(SURVEY_REMINDER_REQUESTCODE, sReminder.build());
-        	    	*/        			
         		} catch (Exception ex2) {
         			Log.e(LOG_TAG + ".onOptionsItemSelected", ex2.toString(), ex2);
         		}
@@ -219,32 +183,24 @@ public class MainActivity extends ActionBarActivity {
 	        	startActivity(intent);
 	
 	        	break;
-        	// load survey page URL in a browser window
-	        case R.id.menu_survey:
-	        	// set user expectations
-	        	Toast.makeText(this, "Opening Survey...", Toast.LENGTH_SHORT).show();
+        	// TODO: add &ParticipantID= and the SharedPreference ParticipantID (if value is set)
+	        case R.id.menu_survey_daily:
 	        	// get path to survey
-	        	String surveyPath = getResources().getString(R.string.uri_survey_daily);
-
-	        	try {
-	        		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
-	        		startActivity(browserIntent);
-	        	} 
-	        	catch (Exception ew) {
-	        		// surveyPath
-	        		Toast.makeText(this, "Failed to load survey:\r\n" + surveyPath, Toast.LENGTH_LONG).show();
-	        		// Toast.makeText(this, ew.toString(), Toast.LENGTH_SHORT).show();
-	        	}
-	        	/*  // if you want then web browser open in your activity then do like this:
-					WebView webView = (WebView) findViewById(R.id.webView1);
-					WebSettings settings = webview.getSettings();
-					settings.setJavaScriptEnabled(true);
-					webView.loadUrl(URL);
-					if you want to use zoom control in your browser then you can use:
-					
-					settings.setSupportZoom(true);
-					settings.setBuiltInZoomControls(true);
-	        	 */
+	        	String surveyPathDaily = getResources().getString(R.string.uri_survey_daily);
+	        	// load survey page URL in a browser window
+	        	ShowSurvey(surveyPathDaily);
+	        	break;
+	        case R.id.menu_survey_initial:
+	        	// get path to survey
+	        	String surveyPathFirst = getResources().getString(R.string.uri_survey_first);
+	        	// load survey page URL in a browser window
+	        	ShowSurvey(surveyPathFirst);
+	        	break;
+	        case R.id.menu_survey_final:	        	
+	        	// get path to survey
+	        	String surveyPathFinal = getResources().getString(R.string.uri_survey_final);
+	        	// load survey page URL in a browser window
+	        	ShowSurvey(surveyPathFinal);
 	        	break;
 	        default:
 	        	// home & up buttons; as you specify a parent activity in AndroidManifest.xml.
@@ -252,6 +208,30 @@ public class MainActivity extends ActionBarActivity {
         }        
         
         return true;
+    }
+    
+    private void ShowSurvey(String surveyPath) {
+    	// set user expectations
+    	Toast.makeText(this, "Opening Survey...", Toast.LENGTH_SHORT).show();
+
+    	try {
+    		String uriParm = "&ParticipantID=";
+    		String participantID = appPreferences.getString("pref_participant_key", "");
+    		
+    		if (participantID.length() != 0) {
+    			surveyPath += uriParm + participantID;
+    		}
+    		
+    		Log.v(LOG_TAG + ".ShowSurvey", surveyPath);
+    		
+    		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(surveyPath));
+    		startActivity(browserIntent);
+    	} 
+    	catch (Exception ew) {
+    		// surveyPath
+    		Toast.makeText(this, "Failed to load survey:\r\n" + surveyPath, Toast.LENGTH_LONG).show();
+    		// Toast.makeText(this, ew.toString(), Toast.LENGTH_SHORT).show();
+    	}
     }
     
     private void RegisterReminderBroadcast() {

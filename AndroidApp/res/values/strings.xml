@@ -8,7 +8,9 @@
     
     <string name="menu_email">E-mail</string>
     <string name="menu_debug">Diagnostics Test</string>
-    <string name="menu_survey">Survey</string>
+    <string name="menu_survey_daily">Daily Survey</string>
+    <string name="menu_survey_initial">Initial Survey</string>
+    <string name="menu_survey_final">Final Survey</string>
     <string name="menu_settings">Settings</string>
 
     <string name="pref_app_title">Application Settings</string>
@@ -39,6 +41,8 @@
     
     <string name="reminder_survey_alert">Reminder: Submit your daily survey!</string>
     
-    <string name="uri_survey_daily">https://cornell.qualtrics.com/SE/?SID=SV_0quR2dUwYX26IND</string>    
+    <string name="uri_survey_first">https://cornell.qualtrics.com/SE/?SID=SV_0PWVClSIAp0gkHH</string>    
+    <string name="uri_survey_daily">https://cornell.qualtrics.com/SE/?SID=SV_4VeB3oDutkLITWd</string>
+    <string name="uri_survey_final">https://cornell.qualtrics.com/SE/?SID=SV_3yEx2ukDt0bFyDz</string>
 </resources>
 

@@ -3,12 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.androidapp.MainActivity" >
     <item
-        android:id="@+id/menu_survey"
+        android:id="@+id/menu_survey_daily"
         android:showAsAction="ifRoom"
         android:icon="@drawable/ic_action_new_event"
-        android:title="@string/menu_survey"
+        android:title="@string/menu_survey_daily"
         />
-	<item
+    <item
+        android:id="@+id/menu_survey_initial"
+        android:showAsAction="never"
+        android:icon="@drawable/ic_action_new_event"
+        android:title="@string/menu_survey_initial"
+        />
+    <item
+        android:id="@+id/menu_survey_final"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_new_event"
+        android:title="@string/menu_survey_final"
+        />
+    
+ 	<item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         android:showAsAction="never"/>
