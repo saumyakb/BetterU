@@ -23,13 +23,13 @@ public class setWallpaper extends BroadcastReceiver {
 		try{
 		    	Log.d("Set Wallpaper:", "In schedule time set wallpaper");
 		    	WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
-		    	SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+		    	SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 		    	Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
 				Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
 		//		Set<String> snackTimes = appPreferences.getStringSet("pref_snack_list_key", null);
 		
 				// get next priming photo
-				PhotoManager iPhoto = new PhotoManager(context);
+				PhotoManager iPhoto = new PhotoManager(context.getApplicationContext());
 				Drawable displayImage = iPhoto.getPrimingPhoto(foodPlate, mealTimes);
 				
 				if (displayImage == null) {
