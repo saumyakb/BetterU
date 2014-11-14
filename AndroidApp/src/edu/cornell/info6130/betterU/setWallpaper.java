@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,10 +31,24 @@ public void onReceive(Context context, Intent intent){
 		// get next priming photo
 		PhotoManager iPhoto = new PhotoManager(context);
 		Drawable displayImage = iPhoto.getPrimingPhoto(foodPlate, mealTimes);
+		
+		if (displayImage == null) {
+			Log.d("Set Original", "In set original set Original wallpaper");
+	    	//WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
+	    	SharedPreferences sharedPrefOrgWall = PreferenceManager.getDefaultSharedPreferences(context);
+	    	String previouslyEncodedImage = sharedPrefOrgWall.getString("imagePreferance", "");
+	    	byte[] b = Base64.decode(previouslyEncodedImage, Base64.DEFAULT);
+	    	Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+		    myWallpaperManager.setBitmap(bitmap);	
+		    Toast.makeText(context, "Original Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
+
+		}
+		else {
 	    final Bitmap wallpaperBitmap = ((BitmapDrawable)displayImage).getBitmap();
    		myWallpaperManager.setBitmap(wallpaperBitmap);
    		//setResource(R.drawable.salad);
    		Toast.makeText(context, "Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
+		}
     		} catch(Exception e){
     			Log.e("Error:", e.toString(), e);
     		} 

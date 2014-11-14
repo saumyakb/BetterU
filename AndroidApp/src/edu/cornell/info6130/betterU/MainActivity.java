@@ -165,26 +165,27 @@ public class MainActivity extends ActionBarActivity {
  		sdf.setTimeZone(TimeZone.getTimeZone("GMT+5"));
  		Log.d("RegisterReminderBroadcast", sdf.format(cal.getTime()));
  		Log.d("Set Wallpaper", sdf.format(setWallpaper));
-	    
- 		//long setOriginal = cal.getTimeInMillis() + 50000;
-	      
-	         //Intent to set original wallpaper
-	    // Intent originalIntent = new Intent(this, setOriginal.class);
-		 //originalIntent.putExtra("image",byteArray);
-		  //   PendingIntent originalPendingIntent = PendingIntent.getBroadcast(this, 
-		    //		 0, originalIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-	      
+	   	      
       
 	  AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 	  Log.d("set Alarm ", "first a");
 	  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setWallpaper,
 			  40000, pendingIntent);
+/*	  
+		long setOriginal = cal.getTimeInMillis() + 50000;
+	      
+	    //Intent to set original wallpaper
+	    Intent originalIntent = new Intent(this, setOriginal.class);
+		 originalIntent.putExtra("image",byteArray);
+		PendingIntent originalPendingIntent = PendingIntent.getBroadcast(this, 
+		    	 0, originalIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
 	  
-	 // Log.d("set Alarm for Original ", "alarm to set original wallpaper ");
-	  //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setOriginal,
-		//	  40000, originalPendingIntent);
+	  Log.d("set Alarm for Original ", "alarm to set original wallpaper ");
+	  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setOriginal,
+			  40000, originalPendingIntent);
 
-
+*/
 
         
         if (BuildConfig.DEBUG) {
