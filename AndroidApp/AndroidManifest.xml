@@ -54,9 +54,6 @@
         <receiver android:name=".ReminderReceiver" 
             		android:process=":remote">
         </receiver>
-        <receiver android:name=".setOriginal" 
-            		android:process=":remote">
-        </receiver>
         <receiver android:name=".setWallpaper" 
             		android:process=":remote">
         </receiver>

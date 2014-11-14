@@ -3,9 +3,7 @@ package edu.cornell.info6130.betterU;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Set;
-import java.util.TimeZone;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -24,9 +22,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.Toast;
@@ -36,7 +31,9 @@ import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 	private static int SURVEY_REMINDER_REQUESTCODE = 1234567; 
-//	private Bitmap bitmap;
+	private static int PRIMING_REMINDER_REQUESTCODE = 7654321; 
+
+	//	private Bitmap bitmap;
 //	private int lastImageRef;
 	private AlarmManager		amReminder;
 	private SharedPreferences 	appPreferences;
@@ -51,20 +48,20 @@ public class MainActivity extends ActionBarActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preference, false);
         // get handle to user's preferences for this app
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);	
-        
-        if (savedInstanceState != null) {
+
+		// set default background
+//		ImageView img = (ImageView) findViewById(R.id.preview);
+//        img.setBackground(getResources().getDrawable(R.drawable.bg_plain2));
+//        if (savedInstanceState != null) {
 //        	ImageView ivw = (ImageView) findViewById(R.id.preview);
 //        	
 //        	ivw.setImageBitmap((Bitmap) savedInstanceState.getParcelable("background"));
 //        	savedInstanceState.putParcelable("background",  null);
-        }
+//        }
         
         //
         setContentView(R.layout.activity_main);
 
-        Button buttonSetWallpaper = (Button) findViewById(R.id.set);
-        Button buttonResetWallpaper = (Button) findViewById(R.id.reset);
-        
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
@@ -72,47 +69,19 @@ public class MainActivity extends ActionBarActivity {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.DEBUG) {
 //        	Log.d("Byte String:", "byte string allocated");
-        }
+//        }
         
     	String imageEncoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-    	if (BuildConfig.DEBUG) {
+//    	if (BuildConfig.DEBUG) {
 //            Log.d("Image Log:", imageEncoded);
-    	}
+//    	}
         	    
         SharedPreferences.Editor editor = appPreferences.edit();
                editor.putString("imagePreferance", imageEncoded);
                editor.commit();
                 
-        //button to set wallpaper based on image previewed on the mainpage
-        buttonSetWallpaper.setOnClickListener(new OnClickListener(){
-        	 public void onClick(View v){
-        		 WallpaperManager myWallpaperManager = WallpaperManager.getInstance(getApplicationContext());
-        		 try {
-        			 ImageView ivw = (ImageView) findViewById(R.id.preview);
-        			 
-        			 Bitmap bm = ((BitmapDrawable)ivw.getDrawable()).getBitmap();
-        			 myWallpaperManager.setBitmap(bm);
-        			 Toast.makeText(getApplicationContext(), "Wallpaper set sucessfully" ,Toast.LENGTH_SHORT).show();
-        		 } catch(Exception e){
-        			 Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-        		 }
-        	 }
-        });
-
-      //button to set original wallpaper
-      buttonResetWallpaper.setOnClickListener(new OnClickListener(){
-        	public void onClick(View v){
-        		try {
-        			wallpaperManager.setBitmap(bitmap);
-        			Toast.makeText(getApplicationContext(),  "Original Wallpaper set successfully", Toast.LENGTH_LONG).show();
-        		} catch(Exception e){
-        			Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
-        		}
-        	}
-        });
-        
         // register shared preference listener to handle when user changes settings
         appPreferences.registerOnSharedPreferenceChangeListener( new SharedPreferences.OnSharedPreferenceChangeListener() {
         	@Override
@@ -122,18 +91,19 @@ public class MainActivity extends ActionBarActivity {
 	        		switch (key) {        			
 	        			case "pref_reminder_key":
 	        			case "pref_bodyclock_sleep_key":
-	                		if (BuildConfig.DEBUG){                 			
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", String.valueOf(sharedPreferences.getBoolean("pref_reminder_key", true)));
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", sharedPreferences.getString("pref_bodyclock_sleep_key", ""));
-	                		}		
+//	                		if (BuildConfig.DEBUG){                 			
+//	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", String.valueOf(sharedPreferences.getBoolean("pref_reminder_key", true)));
+//	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", sharedPreferences.getString("pref_bodyclock_sleep_key", ""));
+//	                		}		
 	                		// toggling reminders or sleep time should reset notification logic
-	        				RegisterReminderBroadcast();
+	        				RegisterReminderBroadcast();	        				
 	        				break;
 	        			default:	        				
-	                		if (BuildConfig.DEBUG){
-	                			// NOTE: code below will throw error on hash-sets, etc. (since it assumes a String value)
-	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + sharedPreferences.getString(key, ""));
-	                		}				
+//	                		if (BuildConfig.DEBUG){
+//	                			// NOTE: code below will throw error on hash-sets, etc. (since it assumes a String value)
+//	                			Log.d(LOG_TAG + ".onSharedPreferenceChanged", key + "=" + sharedPreferences.getString(key, ""));
+//	                		}				
+	        				RegisterWallpaperBroadcast();
 	        				break;
 	        		}
             	} catch (Exception ex) {
@@ -146,47 +116,7 @@ public class MainActivity extends ActionBarActivity {
         
         amReminder = (AlarmManager) getSystemService(ALARM_SERVICE);
         RegisterReminderBroadcast();
-      
-        //intent to set a wallpaper 
-        Log.d("set Intent ", "first intent");
-        
-	     Intent myIntent = new Intent(this, setWallpaper.class);
-	     PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 
-	    		 0, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-	     Calendar cal = Calendar.getInstance(); 
-	     //set timer after 30 seconds from instance
-	     long setWallpaper = cal.getTimeInMillis()+30000;
-	    
-	    // start with system time
-	    cal.setTimeInMillis(System.currentTimeMillis());
-
-	    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
- 		sdf.setTimeZone(TimeZone.getTimeZone("GMT+5"));
- 		Log.d("RegisterReminderBroadcast", sdf.format(cal.getTime()));
- 		Log.d("Set Wallpaper", sdf.format(setWallpaper));
-	   	      
-      
-	  AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-	  Log.d("set Alarm ", "first a");
-	  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setWallpaper,
-			  40000, pendingIntent);
-/*	  
-		long setOriginal = cal.getTimeInMillis() + 50000;
-	      
-	    //Intent to set original wallpaper
-	    Intent originalIntent = new Intent(this, setOriginal.class);
-		 originalIntent.putExtra("image",byteArray);
-		PendingIntent originalPendingIntent = PendingIntent.getBroadcast(this, 
-		    	 0, originalIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-	  
-	  Log.d("set Alarm for Original ", "alarm to set original wallpaper ");
-	  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,setOriginal,
-			  40000, originalPendingIntent);
-
-*/
-
+        RegisterWallpaperBroadcast();
         
         if (BuildConfig.DEBUG) {
           Log.v(LOG_TAG + ".onCreate", "Complete");
@@ -402,6 +332,38 @@ public class MainActivity extends ActionBarActivity {
     			Log.e(LOG_TAG + ".RegisterReminderBroadcast", ex.toString(), ex);
     		}
     	}
+    }
+
+    private void RegisterWallpaperBroadcast() {
+    	try {    	
+	        //intent to set a wallpaper 
+	        Log.d("set Intent ", "first intent");
+	        
+		    Intent myIntent = new Intent(this, setWallpaper.class);
+		    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, PRIMING_REMINDER_REQUESTCODE, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+	
+		    Calendar cal = Calendar.getInstance();
+		    // set timer after 30 seconds from instance
+		    long setWallpaper = cal.getTimeInMillis()+30000;
+		    
+	    	if (BuildConfig.DEBUG) {
+	    		// dump next alarm time
+	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z", getResources().getConfiguration().locale);
+	    		// sdf.setTimeZone(TimeZone.getDefault());
+	    		Log.d(LOG_TAG + ".RegisterWallpaperBroadcast", sdf.format(setWallpaper));
+	    	}
+		   	      
+			// AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+			Log.d("set Alarm ", "first alarm");
+			amReminder.setRepeating(AlarmManager.RTC_WAKEUP, setWallpaper, 30000, pendingIntent);
+    	} catch (Exception ex) {
+    		// StackTraceElement trace = new Exception().getStackTrace();
+    		Toast.makeText(this,  "RegisterWallpaperBroadcast:\r\n" + ex.toString(),  Toast.LENGTH_LONG).show();
+    		if (BuildConfig.DEBUG){ 
+    			Log.e(LOG_TAG + ".RegisterWallpaperBroadcast", ex.toString(), ex);
+    		}
+    	}
+
     }
     
 //    private void UnregisterReminderBroadcast() {
