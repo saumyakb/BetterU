@@ -360,20 +360,22 @@ public class MainActivity extends ActionBarActivity {
 		    
 		    
 		    Calendar cal = Calendar.getInstance();
-		    // set timer after 30 seconds from instance
-		    long setWallpaper = cal.getTimeInMillis()+30000;
+		    // set timer to start at the start of next half hour
+		    int unroundedMinutes = cal.get(Calendar.MINUTE);
+		    int mod = 60 - unroundedMinutes % 60;
+		    long setWallpaper = cal.getTimeInMillis()+ mod *60000;
 		    
 		    
 	    	if (BuildConfig.DEBUG) {
 	    		// dump next alarm time
 	    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z", getResources().getConfiguration().locale);
 	    		// sdf.setTimeZone(TimeZone.getDefault());
-	    		Log.d(LOG_TAG + ".RegisterWallpaperBroadcast", sdf.format(setWallpaper));
+	    		Log.d(LOG_TAG + ".RegisterWallpaperBroadcast(to set)", sdf.format(setWallpaper));
 	    	}
 		   	      
 			// AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Log.d("set Alarm ", "first alarm");
-			amReminder.setRepeating(AlarmManager.RTC_WAKEUP, setWallpaper, 30000, pendingIntent);
+			amReminder.setRepeating(AlarmManager.RTC_WAKEUP, setWallpaper, 3600000, pendingIntent);
     	} catch (Exception ex) {
     		// StackTraceElement trace = new Exception().getStackTrace();
     		Toast.makeText(this,  "RegisterWallpaperBroadcast:\r\n" + ex.toString(),  Toast.LENGTH_LONG).show();
