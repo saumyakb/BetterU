@@ -1,5 +1,7 @@
 package edu.cornell.info6130.betterU;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import android.app.WallpaperManager;
@@ -11,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Base64;
 import android.util.Log;
@@ -23,9 +26,18 @@ public class setWallpaper extends BroadcastReceiver {
 		try{
 		    	Log.d("Set Wallpaper:", "In schedule time set wallpaper");
 		    	WallpaperManager myWallpaperManager = WallpaperManager.getInstance(context);
-		    	SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
-		    	Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
-				Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
+		    	
+		    	Bundle bundle=intent.getExtras();
+		    	String[] foodPlateStrArr=bundle.getStringArray("foodPlateBundle");
+		    	String[] mealTimesStrArr=bundle.getStringArray("mealTimesBundle");
+		    	//Log.d("foodPlateStrArr BR",foodPlateStrArr[0]);
+		    	//Log.d("mealTimesStrArr BR",mealTimesStrArr[0]);
+		    	Set<String> foodPlate = new HashSet<String> (Arrays.asList(foodPlateStrArr));
+		    	Set<String> mealTimes = new HashSet<String> (Arrays.asList(mealTimesStrArr));
+		    	
+		   // 	SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+		  //  	Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
+		//		Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
 		//		Set<String> snackTimes = appPreferences.getStringSet("pref_snack_list_key", null);
 		
 				// get next priming photo

@@ -336,15 +336,33 @@ public class MainActivity extends ActionBarActivity {
 
     private void RegisterWallpaperBroadcast() {
     	try {    	
+    		  		
+	    	Set<String> foodPlate = appPreferences.getStringSet("pref_food_list_key", null);
+			Set<String> mealTimes = appPreferences.getStringSet("pref_meal_list_key", null);
 	        //intent to set a wallpaper 
 	        Log.d("set Intent ", "first intent");
 	        
 		    Intent myIntent = new Intent(this, setWallpaper.class);
+		    String[] foodPlateStrArr = foodPlate.toArray(new String[foodPlate.size()]);
+		    String[] mealTimesStrArr = mealTimes.toArray(new String[mealTimes.size()]);
+		    
+		    Log.d("foodPlateStrArr Main ACt",foodPlateStrArr[0]);
+	    	Log.d("mealTimesStrArr Main Act",mealTimesStrArr[0]);
+	    	
+		    Bundle bundle=new Bundle();
+		    bundle.putStringArray("foodPlateBundle", foodPlateStrArr);
+		    bundle.putStringArray("mealTimesBundle", mealTimesStrArr);
+		    myIntent.putExtras(bundle);// myIntent.putExtras(bundleMealTimes);
+		    
 		    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, PRIMING_REMINDER_REQUESTCODE, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-	
+		    
+		   
+		    
+		    
 		    Calendar cal = Calendar.getInstance();
 		    // set timer after 30 seconds from instance
 		    long setWallpaper = cal.getTimeInMillis()+30000;
+		    
 		    
 	    	if (BuildConfig.DEBUG) {
 	    		// dump next alarm time
