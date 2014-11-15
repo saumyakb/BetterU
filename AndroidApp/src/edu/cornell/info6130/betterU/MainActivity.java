@@ -48,27 +48,30 @@ public class MainActivity extends ActionBarActivity {
         PreferenceManager.setDefaultValues(this, R.xml.preference, false);
         // get handle to user's preferences for this app
         appPreferences = PreferenceManager.getDefaultSharedPreferences(this);	
-
-		// set default background
-//		ImageView img = (ImageView) findViewById(R.id.preview);
-//        img.setBackground(getResources().getDrawable(R.drawable.bg_plain2));
-//        if (savedInstanceState != null) {
-//        	ImageView ivw = (ImageView) findViewById(R.id.preview);
-//        	
-//        	ivw.setImageBitmap((Bitmap) savedInstanceState.getParcelable("background"));
-//        	savedInstanceState.putParcelable("background",  null);
-//        }
         
         //
         setContentView(R.layout.activity_main);
 
+        // TODO: push this into an AsynchTask and store on SD card instead
+        // TODO: test with live wallpapers
         final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
         final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
         final Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
  
+//        if (BuildConfig.DEBUG) {
+//        	Log.d(LOG_TAG + ".onCreate", "bitmap size: " + String.valueOf(byteSizeOf(bitmap)));
+//        }
+        
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
+        // free the bitmaps!!
+        bitmap.recycle();
+        
+//        if (BuildConfig.DEBUG) {
+ //       	Log.d(LOG_TAG + ".onCreate", "bitmap compressed size: " + String.valueOf(byteArray.length));
+   //     }
+        
 //        if (BuildConfig.DEBUG) {
 //        	Log.d("Byte String:", "byte string allocated");
 //        }
@@ -77,10 +80,12 @@ public class MainActivity extends ActionBarActivity {
 //    	if (BuildConfig.DEBUG) {
 //            Log.d("Image Log:", imageEncoded);
 //    	}
-        	    
-        SharedPreferences.Editor editor = appPreferences.edit();
+    	
+    	if (byteArray.length <= 1500000) {
+    		SharedPreferences.Editor editor = appPreferences.edit();
                editor.putString("imagePreferance", imageEncoded);
                editor.commit();
+    	}
                 
         // register shared preference listener to handle when user changes settings
         appPreferences.registerOnSharedPreferenceChangeListener( new SharedPreferences.OnSharedPreferenceChangeListener() {
@@ -88,7 +93,8 @@ public class MainActivity extends ActionBarActivity {
 			public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         		try {
 					// debug output
-	        		switch (key) {        			
+	        		switch (key) {
+	        			case "pref_participant_key":
 	        			case "pref_reminder_key":
 	        			case "pref_bodyclock_sleep_key":
 //	                		if (BuildConfig.DEBUG){                 			
@@ -277,7 +283,8 @@ public class MainActivity extends ActionBarActivity {
     		long alarmInterval = AlarmManager.INTERVAL_DAY;
 	    	Intent intent = new Intent(this, ReminderReceiver.class);
 	    	
-	    	intent.putExtra("alarm_message", getResources().getString(R.string.reminder_survey_alert));
+	    	Bundle bundle=new Bundle();
+		    bundle.putString("alarm_message", getResources().getString(R.string.reminder_survey_alert));
 	    	
 	    	String surveyPath = getResources().getString(R.string.uri_survey_daily);
 	    	String uriParm = "&ParticipantID=";
@@ -285,8 +292,9 @@ public class MainActivity extends ActionBarActivity {
     		
     		if (participantID.length() != 0) {
     			surveyPath += uriParm + participantID;
-    		}
-	    	intent.putExtra("alarm_url",surveyPath);
+    		}    		
+		    bundle.putString("alarm_url",surveyPath);
+		    intent.putExtras(bundle);
 	    	// cancel any existing reminder
 	    	PendingIntent pendingIntent = PendingIntent.getBroadcast(this, SURVEY_REMINDER_REQUESTCODE, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	    	
@@ -318,6 +326,7 @@ public class MainActivity extends ActionBarActivity {
 		    		Log.d(LOG_TAG + ".RegisterReminderBroadcast", sdf.format(cal.getTime()));
 		    	}
 
+		    	pendingIntent = PendingIntent.getBroadcast(this, SURVEY_REMINDER_REQUESTCODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		    	// set alarm
 		    	// amReminder.setInexactRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmInterval, pendingIntent);
 		    	amReminder.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmInterval, pendingIntent);
@@ -364,9 +373,6 @@ public class MainActivity extends ActionBarActivity {
 		    
 		    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, PRIMING_REMINDER_REQUESTCODE, myIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 		    
-		   
-		    
-		    
 		    Calendar cal = Calendar.getInstance();
 		    // set timer to start at the start of next half hour
 		    int unroundedMinutes = cal.get(Calendar.MINUTE);
@@ -392,6 +398,18 @@ public class MainActivity extends ActionBarActivity {
     		}
     	}
 
+    }
+    
+    // this function returns estimated size (so we can see if it'll fit in app preferences
+    // based on code from: stackoverflow.com/questions/2407565/bitmap-byte-size-after-decoding
+    private static int byteSizeOf(Bitmap bitmap) {
+    	//if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+    	//	return bitmap.getAllocationByteCount();
+    	//} else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+    		return bitmap.getByteCount();
+    	//} else {
+    	//	return bitmap.getRowBytes() & bitmap.getHeight();
+    	//}
     }
     
 //    private void UnregisterReminderBroadcast() {
