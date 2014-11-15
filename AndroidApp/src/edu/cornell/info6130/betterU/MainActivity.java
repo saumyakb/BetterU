@@ -278,7 +278,15 @@ public class MainActivity extends ActionBarActivity {
 	    	Intent intent = new Intent(this, ReminderReceiver.class);
 	    	
 	    	intent.putExtra("alarm_message", getResources().getString(R.string.reminder_survey_alert));
-	    	intent.putExtra("alarm_url", getResources().getString(R.string.uri_survey_daily));
+	    	
+	    	String surveyPath = getResources().getString(R.string.uri_survey_daily);
+	    	String uriParm = "&ParticipantID=";
+    		String participantID = appPreferences.getString("pref_participant_key", "");
+    		
+    		if (participantID.length() != 0) {
+    			surveyPath += uriParm + participantID;
+    		}
+	    	intent.putExtra("alarm_url",surveyPath);
 	    	// cancel any existing reminder
 	    	PendingIntent pendingIntent = PendingIntent.getBroadcast(this, SURVEY_REMINDER_REQUESTCODE, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	    	
