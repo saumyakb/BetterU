@@ -5,6 +5,14 @@
     <string name="act_main_button_set">Set Wallpaper</string>
     <string name="act_main_button_reset">Reset Wallpaper</string>
     <string name="act_main_image_desc">Priming Image</string>
+    <string name="act_main_txt_intro">Please do the following in order to receive full credit for the study:\n\n
+•	Locate your four letter identity code in “My Profile” on the SONA website and enter it as your “Participant ID” in BetterU’s Settings.\n\n 
+•	Select the “Initial Survey” from BetterU’s menu to sign the consent form and complete the first survey. You must consent in order to participate in the study.\n\n 
+•	Select “Settings” from BetterU’s menu and enter your meal preferences and sleep schedule.\n\n
+•	Complete the “Daily Survey” before going to sleep every day.\n\n
+•	Complete both the "Daily Survey" and “Final Survey” at the end of the day on 11/24.\n 
+        
+    </string>
     
     <string name="menu_email">E-mail</string>
     <string name="menu_debug">Diagnostics Test</string>

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context="edu.cornell.info6130.betterU.MainActivity" >
 
     <ImageView
@@ -10,5 +11,15 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/act_main_image_desc"
         android:src="@drawable/bg_plain2" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/act_main_txt_intro" />
 
 </RelativeLayout>
