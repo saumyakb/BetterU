@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
@@ -20,13 +21,13 @@ import android.util.Log;
 	
 
 public class PhotoManager {
-	
-	private final String LOG_TAG = "MainActivity";	
+	private final String LOG_TAG = "PhotoManager";	
 	private final Locale _locale;
 	// breakfast, lunch, dinner
 	private final Meal[] _meals = {new Meal("B", 02, 11), new Meal("L", 11, 14), new Meal("D", 14, 02)};
 	
 	private AssetManager _am;
+	private Context _context;
 	
 	/**
 	 * Requires context object to access to application's AssetsManager. 
@@ -34,6 +35,7 @@ public class PhotoManager {
 	 * @return 						N/A
 	 */
 	public PhotoManager(Context context) {
+		_context = context;
 		_am = context.getAssets();
 		_locale = context.getResources().getConfiguration().locale;
 		
@@ -54,7 +56,10 @@ public class PhotoManager {
 	 * @see         				Drawable
 	 */
 	public Drawable getPrimingPhoto (Set<String> PreferredFoodList, Set<String> MealTimes) {
+		boolean errorTrapped = false;
 		Drawable randomPhoto = null;
+		String randomFood = "";
+		String randomFile = "";
 
 		try {
 			Meal activeMeal = pickMeal(MealTimes);
@@ -69,9 +74,9 @@ public class PhotoManager {
 				//					how to handle if allowed foodCats do NOT contain meal time? (i.e., breakfast, but only fish selected...)
 				
 				// pick a food from preference list
-				String randomFood = pickFood(PreferredFoodList);
+				randomFood = pickFood(PreferredFoodList);
 				// pick a photo in that food category
-				String randomFile = pickPhoto(randomFood, activeMeal);
+				randomFile = pickPhoto(randomFood, activeMeal);
 			 
 				// open handle to file from asset manager
 				InputStream assetReader = _am.open(randomFood + File.separator + randomFile);
@@ -80,8 +85,21 @@ public class PhotoManager {
 			}
 
 		} catch (Exception ex) {
+			errorTrapped = true;
 			if (BuildConfig.DEBUG) {
 				Log.e(LOG_TAG + ".getPrimingPhoto", ex.toString(), ex);
+			}
+		} finally {
+			// attempt to log priming, but don't throw error if it fails...
+			try {
+				if (randomFile != null) {
+					DatabaseLogger logger = new DatabaseLogger(_context);
+					logger.open();				
+					logger.add(new DatabaseLog(randomFood + File.separator + randomFile, new Date(), "Status: " + String.valueOf(errorTrapped)));
+					logger.close();			
+				}
+			} catch (Exception ex) {
+				Log.e(LOG_TAG + ".getPrimingPhoto!DatabaseLogger", ex.toString(), ex);
 			}
 		}
 		 // return photo

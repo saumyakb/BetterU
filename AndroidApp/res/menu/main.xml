@@ -25,13 +25,17 @@
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"
         android:showAsAction="never"/>
-	<item
+	<!-- hidden when not in debug mode -->
+ 	<item
         android:id="@+id/menu_email"
         android:title="@string/menu_email"
         android:showAsAction="never"/>
-	<!-- remove prior to production release -->
 	<item
         android:id="@+id/menu_debug"
         android:title="@string/menu_debug"
         android:showAsAction="never"/>
+	<item
+        android:id="@+id/menu_log"
+        android:title="@string/menu_log"
+        android:showAsAction="never"/>	
 </menu>

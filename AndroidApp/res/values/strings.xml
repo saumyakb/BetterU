@@ -14,8 +14,9 @@
         
     </string>
     
-    <string name="menu_email">E-mail</string>
+    <string name="menu_email">E-mail Log</string>
     <string name="menu_debug">Diagnostics Test</string>
+    <string name="menu_log">View Log</string>
     <string name="menu_survey_daily">Daily Survey</string>
     <string name="menu_survey_initial">Initial Survey</string>
     <string name="menu_survey_final">Final Survey</string>

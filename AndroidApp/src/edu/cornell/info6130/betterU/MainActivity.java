@@ -1,8 +1,10 @@
 package edu.cornell.info6130.betterU;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import android.app.AlarmManager;
@@ -30,6 +32,7 @@ import android.widget.Toast;
 // TODO: consider defining request codes in values, to distinguish between request types/actions?
 
 public class MainActivity extends ActionBarActivity {
+	private final String LOG_TAG = MainActivity.class.getName();
 	private static int SURVEY_REMINDER_REQUESTCODE = 1234567; 
 	private static int PRIMING_REMINDER_REQUESTCODE = 7654321; 
 
@@ -37,7 +40,6 @@ public class MainActivity extends ActionBarActivity {
 //	private int lastImageRef;
 	private AlarmManager		amReminder;
 	private SharedPreferences 	appPreferences;
-	private String LOG_TAG = "MainActivity";
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,10 +161,12 @@ public class MainActivity extends ActionBarActivity {
         
         // hide diagnostics menu from release build
         if(!BuildConfig.DEBUG) {
-        	// hide email menu
-        	menu.findItem(R.id.menu_email).setVisible(false);
+//        	// hide email menu
+//        	menu.findItem(R.id.menu_email).setVisible(false);
         	// hide diagnostics/debug menu
         	menu.findItem(R.id.menu_debug).setVisible(false);
+        	// hide view log menu
+        	menu.findItem(R.id.menu_log).setVisible(false);
         }
 
         return true;
@@ -205,18 +209,51 @@ public class MainActivity extends ActionBarActivity {
         		
         		break;
         	case R.id.menu_email:
+        		String[] 	email_to = new String[]{"curtis.josey@gmail.com"};
+        		String 		email_subject = "betterU Diagnostics";
+        		String 		email_body = "";
+
+        		// participant id
+        		email_body = "ParticipantID = " + appPreferences.getString("pref_participant_key", "") + '\r' + '\n';
+        		// dump priming log
+        		email_body += "Priming Log:" + '\r' + '\n';
+    			DatabaseLogger logger = new DatabaseLogger(getApplicationContext());
+				logger.open();
+				email_body += logger.getAll().toString();
+				logger.close();
+        		
         		Intent email = new Intent(Intent.ACTION_SEND);
+
         		email.setType("message/rfc822");
-        		email.putExtra(Intent.EXTRA_EMAIL,  new String[]{"curtis.josey@gmail.com"});
-        		email.putExtra(Intent.EXTRA_SUBJECT,  "betterU Diagnostics");
-        		email.putExtra(Intent.EXTRA_TEXT,  "Can you read this now?");
+        		email.putExtra(Intent.EXTRA_EMAIL, email_to);        		
+        		email.putExtra(Intent.EXTRA_SUBJECT, email_subject);        		
+        		email.putExtra(Intent.EXTRA_TEXT,  email_body);
         		// email.setData(Uri.parse("mailto:" + "curtis.josey@gmail.com");
         		// revert back to our app after sending (instead of email app)
         		email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        		
         		try {
         			startActivity(Intent.createChooser(email,  "Send mail..."));        			
         		} catch (Exception exMail) {
         			Toast.makeText(this,  "There are no email clients installed.",  Toast.LENGTH_SHORT).show();
+        		}
+        		break;
+        	case R.id.menu_log:
+        		if (BuildConfig.DEBUG) {
+        			DatabaseLogger debugLogger = new DatabaseLogger(getApplicationContext()); 
+        		
+        		 	debugLogger.open();
+        		 	
+        			try {    				
+        				Log.d(LOG_TAG + ".onOptionsItemSelected", "Log Dump\r\n: " + debugLogger.getAll().toString());
+        			}
+        			catch (Exception el) {
+        				Log.w(LOG_TAG + ".onOptionsItemSelected", el.toString(), el);
+        				Log.w(LOG_TAG + ".onOptionsItemSelected", "calling deleteAll Logs");
+        				debugLogger.deleteAll();
+        			} finally {    				
+        				debugLogger.close();
+        			}
         		}
         		break;
         	case R.id.menu_settings:
