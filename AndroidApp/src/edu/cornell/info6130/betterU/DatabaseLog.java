@@ -72,7 +72,7 @@ public class DatabaseLog {
 		output += "; PrimingTime=" + sdf.format(this.primingTime);
 		output += "; Note=" + this.note;
 		// new line characters
-		output += '\r' + '\n';
+		output += System.getProperty("line.separator");
 		
 		return output;
 	}
